@@ -1,4 +1,4 @@
-package home.pmyn.support.operand;
+package home.pmyn.support.operator.operand;
 
 public class StringOperand implements Operand {
 

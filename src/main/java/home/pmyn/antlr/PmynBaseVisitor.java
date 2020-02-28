@@ -1,6 +1,6 @@
 // Generated from Pmyn.g4 by ANTLR 4.8
 
-package home.pmyn;
+package home.pmyn.antlr;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 

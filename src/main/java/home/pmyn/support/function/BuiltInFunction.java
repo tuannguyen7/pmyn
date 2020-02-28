@@ -1,9 +1,9 @@
 package home.pmyn.support.function;
 
-import home.pmyn.support.operand.ListOperand;
-import home.pmyn.support.operand.NumberOperand;
-import home.pmyn.support.operand.Operand;
-import home.pmyn.support.operand.NothingOperand;
+import home.pmyn.support.operator.operand.ListOperand;
+import home.pmyn.support.operator.operand.NumberOperand;
+import home.pmyn.support.operator.operand.Operand;
+import home.pmyn.support.operator.operand.NothingOperand;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 

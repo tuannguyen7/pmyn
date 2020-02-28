@@ -4,7 +4,7 @@
 grammar Pmyn;
 
 @header {
-package home.rule.lang1;
+package home.pmyn.antlr;
 }
 
 

@@ -1,9 +1,5 @@
 arr = [1,2,3,4]
-def func(a) {
-  b = 10
-  c = pow(b, 3)
-  return a + c + 100
+def func(a, b, c) {
+  return a + b + c
 }
-print(func(10))
-f = func
-print(map(f, arr))
+print(func(10, 15, 20))
