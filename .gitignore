@@ -1,0 +1,10 @@
+out/
+build/
+.class
+.idea/
+
+# Build tool
+gradle/
+.gradle/
+gradlew
+gradlew.bat
