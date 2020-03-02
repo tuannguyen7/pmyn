@@ -1,4 +1,4 @@
-package home.pmyn.support.operator.operand;
+package home.pmyn.support.operand;
 
 import java.util.Iterator;
 import java.util.List;

@@ -5,8 +5,11 @@ package home.pmyn.antlr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class PmynParser extends Parser {
@@ -245,26 +248,6 @@ public class PmynParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class VariableAssignmentContext extends StatContext {
-		public VarAssginmentContext varAssginment() {
-			return getRuleContext(VarAssginmentContext.class,0);
-		}
-		public TerminalNode NEW_LINE() { return getToken(PmynParser.NEW_LINE, 0); }
-		public VariableAssignmentContext(StatContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PmynListener ) ((PmynListener)listener).enterVariableAssignment(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitVariableAssignment(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitVariableAssignment(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class ReturnStatementContext extends StatContext {
 		public TerminalNode RETURN() { return getToken(PmynParser.RETURN, 0); }
 		public TerminalNode NEW_LINE() { return getToken(PmynParser.NEW_LINE, 0); }
@@ -286,23 +269,43 @@ public class PmynParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class FunctionCallContext extends StatContext {
+	public static class ExprStatementContext extends StatContext {
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode NEW_LINE() { return getToken(PmynParser.NEW_LINE, 0); }
-		public FunctionCallContext(StatContext ctx) { copyFrom(ctx); }
+		public ExprStatementContext(StatContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PmynListener ) ((PmynListener)listener).enterFunctionCall(this);
+			if ( listener instanceof PmynListener ) ((PmynListener)listener).enterExprStatement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitFunctionCall(this);
+			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitExprStatement(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitFunctionCall(this);
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitExprStatement(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class VariableAssignmentStatementContext extends StatContext {
+		public VarAssginmentContext varAssginment() {
+			return getRuleContext(VarAssginmentContext.class,0);
+		}
+		public TerminalNode NEW_LINE() { return getToken(PmynParser.NEW_LINE, 0); }
+		public VariableAssignmentStatementContext(StatContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PmynListener ) ((PmynListener)listener).enterVariableAssignmentStatement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitVariableAssignmentStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitVariableAssignmentStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -316,7 +319,7 @@ public class PmynParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
-				_localctx = new VariableAssignmentContext(_localctx);
+				_localctx = new VariableAssignmentStatementContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(29);
@@ -346,7 +349,7 @@ public class PmynParser extends Parser {
 				}
 				break;
 			case 3:
-				_localctx = new FunctionCallContext(_localctx);
+				_localctx = new ExprStatementContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(37);
@@ -500,6 +503,28 @@ public class PmynParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class ListGetIndexContext extends ExprContext {
+		public TerminalNode ID() { return getToken(PmynParser.ID, 0); }
+		public TerminalNode OPEN_BRACK() { return getToken(PmynParser.OPEN_BRACK, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode CLOSE_BRACK() { return getToken(PmynParser.CLOSE_BRACK, 0); }
+		public ListGetIndexContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof PmynListener ) ((PmynListener)listener).enterListGetIndex(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitListGetIndex(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitListGetIndex(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class UnaryMinusContext extends ExprContext {
 		public TerminalNode SUB_OPERATOR() { return getToken(PmynParser.SUB_OPERATOR, 0); }
 		public ExprContext expr() {
@@ -534,28 +559,6 @@ public class PmynParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitStringRef(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class ArrayIndexContext extends ExprContext {
-		public TerminalNode ID() { return getToken(PmynParser.ID, 0); }
-		public TerminalNode OPEN_BRACK() { return getToken(PmynParser.OPEN_BRACK, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode CLOSE_BRACK() { return getToken(PmynParser.CLOSE_BRACK, 0); }
-		public ArrayIndexContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof PmynListener ) ((PmynListener)listener).enterArrayIndex(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitArrayIndex(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitArrayIndex(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -707,7 +710,7 @@ public class PmynParser extends Parser {
 				break;
 			case 3:
 				{
-				_localctx = new ArrayIndexContext(_localctx);
+				_localctx = new ListGetIndexContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(52);

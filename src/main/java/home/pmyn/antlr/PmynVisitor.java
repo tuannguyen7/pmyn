@@ -25,12 +25,12 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarAssginment(PmynParser.VarAssginmentContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code VariableAssignment}
+	 * Visit a parse tree produced by the {@code VariableAssignmentStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVariableAssignment(PmynParser.VariableAssignmentContext ctx);
+	T visitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ReturnStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -39,12 +39,12 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnStatement(PmynParser.ReturnStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FunctionCall}
+	 * Visit a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionCall(PmynParser.FunctionCallContext ctx);
+	T visitExprStatement(PmynParser.ExprStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code FuncDef}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -88,6 +88,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAddSub(PmynParser.AddSubContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ListGetIndex}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListGetIndex(PmynParser.ListGetIndexContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -101,13 +108,6 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStringRef(PmynParser.StringRefContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ArrayIndex}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArrayIndex(PmynParser.ArrayIndexContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code NumRef}
 	 * labeled alternative in {@link PmynParser#expr}.

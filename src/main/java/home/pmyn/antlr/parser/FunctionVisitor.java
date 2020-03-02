@@ -1,10 +1,9 @@
-package home.pmyn.antlr;
+package home.pmyn.antlr.parser;
 
 import home.pmyn.antlr.PmynParser.FuncBodyContext;
 import home.pmyn.antlr.PmynParser.ReturnStatementContext;
-import home.pmyn.antlr.parser.MyVisitor;
-import home.pmyn.support.operator.operand.Operand;
-import home.pmyn.support.operator.operand.NothingOperand;
+import home.pmyn.support.operand.Operand;
+import home.pmyn.support.operand.NothingOperand;
 import java.util.Map;
 
 public class FunctionVisitor extends MyVisitor {

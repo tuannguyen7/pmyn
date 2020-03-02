@@ -30,17 +30,17 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitVarAssginment(PmynParser.VarAssginmentContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code VariableAssignment}
+	 * Enter a parse tree produced by the {@code VariableAssignmentStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void enterVariableAssignment(PmynParser.VariableAssignmentContext ctx);
+	void enterVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code VariableAssignment}
+	 * Exit a parse tree produced by the {@code VariableAssignmentStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void exitVariableAssignment(PmynParser.VariableAssignmentContext ctx);
+	void exitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ReturnStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -54,17 +54,17 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitReturnStatement(PmynParser.ReturnStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code FunctionCall}
+	 * Enter a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunctionCall(PmynParser.FunctionCallContext ctx);
+	void enterExprStatement(PmynParser.ExprStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code FunctionCall}
+	 * Exit a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunctionCall(PmynParser.FunctionCallContext ctx);
+	void exitExprStatement(PmynParser.ExprStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code FuncDef}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -138,6 +138,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitAddSub(PmynParser.AddSubContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ListGetIndex}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterListGetIndex(PmynParser.ListGetIndexContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ListGetIndex}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitListGetIndex(PmynParser.ListGetIndexContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -161,18 +173,6 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStringRef(PmynParser.StringRefContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ArrayIndex}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterArrayIndex(PmynParser.ArrayIndexContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ArrayIndex}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitArrayIndex(PmynParser.ArrayIndexContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code NumRef}
 	 * labeled alternative in {@link PmynParser#expr}.

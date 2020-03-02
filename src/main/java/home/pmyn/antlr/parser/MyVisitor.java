@@ -3,11 +3,11 @@ package home.pmyn.antlr.parser;
 
 import home.pmyn.antlr.PmynBaseVisitor;
 import home.pmyn.antlr.PmynParser;
+import home.pmyn.antlr.PmynParser.ExprStatementContext;
 import home.pmyn.support.function.BuiltInFunction;
 import home.pmyn.antlr.PmynParser.AddSubContext;
 import home.pmyn.antlr.PmynParser.FuncCallContext;
 import home.pmyn.antlr.PmynParser.FuncDefContext;
-import home.pmyn.antlr.PmynParser.FunctionCallContext;
 import home.pmyn.antlr.PmynParser.ListRefContext;
 import home.pmyn.antlr.PmynParser.NumRefContext;
 import home.pmyn.antlr.PmynParser.ReturnStatementContext;
@@ -17,10 +17,10 @@ import home.pmyn.antlr.PmynParser.VarAssginmentContext;
 import home.pmyn.antlr.PmynParser.VarRefContext;
 import home.pmyn.support.function.Function;
 import home.pmyn.support.function.UserDefinedFunction;
-import home.pmyn.support.operator.operand.ListOperand;
-import home.pmyn.support.operator.operand.NumberOperand;
-import home.pmyn.support.operator.operand.Operand;
-import home.pmyn.support.operator.operand.StringOperand;
+import home.pmyn.support.operand.ListOperand;
+import home.pmyn.support.operand.NumberOperand;
+import home.pmyn.support.operand.Operand;
+import home.pmyn.support.operand.StringOperand;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public class MyVisitor extends PmynBaseVisitor<Operand> {
 
-  Map<String, Operand> variables = new HashMap<>();
+  Map<String, Operand>  variables = new HashMap<>();
   Map<String, Function> functionMap = Map.of("pow", BuiltInFunction.Pow, "print", BuiltInFunction.Print, "map", BuiltInFunction.Map);
   Map<String, Function> userDefinedFunc = new HashMap<>();
 
@@ -57,7 +57,7 @@ public class MyVisitor extends PmynBaseVisitor<Operand> {
   }
 
   @Override
-  public Operand visitFunctionCall(FunctionCallContext ctx) {
+  public Operand visitExprStatement(ExprStatementContext ctx) {
     return visit(ctx.expr());
   }
 
@@ -100,7 +100,7 @@ public class MyVisitor extends PmynBaseVisitor<Operand> {
 
   @Override
   public Operand visitFuncCall(FuncCallContext ctx) {
-    Function f = null;
+    Function f;
     if (functionMap.containsKey(ctx.ID().getText()))
       f = functionMap.get(ctx.ID().getText());
     else if (userDefinedFunc.containsKey(ctx.ID().getText()))

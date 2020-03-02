@@ -33,7 +33,7 @@ public class PmynBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements P
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitVariableAssignment(PmynParser.VariableAssignmentContext ctx) { return visitChildren(ctx); }
+	@Override public T visitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -47,7 +47,7 @@ public class PmynBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements P
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitFunctionCall(PmynParser.FunctionCallContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExprStatement(PmynParser.ExprStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -96,6 +96,13 @@ public class PmynBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements P
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitListGetIndex(PmynParser.ListGetIndexContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitUnaryMinus(PmynParser.UnaryMinusContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -104,13 +111,6 @@ public class PmynBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements P
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitStringRef(PmynParser.StringRefContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitArrayIndex(PmynParser.ArrayIndexContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -42,13 +42,13 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVariableAssignment(PmynParser.VariableAssignmentContext ctx) { }
+	@Override public void enterVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVariableAssignment(PmynParser.VariableAssignmentContext ctx) { }
+	@Override public void exitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -66,13 +66,13 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionCall(PmynParser.FunctionCallContext ctx) { }
+	@Override public void enterExprStatement(PmynParser.ExprStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunctionCall(PmynParser.FunctionCallContext ctx) { }
+	@Override public void exitExprStatement(PmynParser.ExprStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -150,6 +150,18 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterListGetIndex(PmynParser.ListGetIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitListGetIndex(PmynParser.ListGetIndexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUnaryMinus(PmynParser.UnaryMinusContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -169,18 +181,6 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStringRef(PmynParser.StringRefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterArrayIndex(PmynParser.ArrayIndexContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitArrayIndex(PmynParser.ArrayIndexContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

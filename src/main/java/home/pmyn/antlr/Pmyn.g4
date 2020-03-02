@@ -14,25 +14,25 @@ varAssginment
     :  ID ASSIGN expr
     ;
 
-stat:   varAssginment  NEW_LINE                       #VariableAssignment
+stat:   varAssginment  NEW_LINE                       #VariableAssignmentStatement
     //|   IF expr THEN stat (ELSE stat)?        #IfElseStatement
     |   RETURN expr?  NEW_LINE                        #ReturnStatement
         // func call
 //    |   IF expr ':'
-    |   expr NEW_LINE                                 #FunctionCall
+    |   expr NEW_LINE                                 #ExprStatement
     |   functionDecl NEW_LINE                         #FuncDef
     ;
 
 expr:   // func call like f(), f(x), f(1,2)
         ID varArgs                                    #FuncCall
-        // array index like a[i], a[i][j]
     |   OPEN_BRACK sublist CLOSE_BRACK                #ListRef
-    |   ID OPEN_BRACK expr CLOSE_BRACK                #ArrayIndex
+        // array index like a[i], a[i][j]
+    |   ID OPEN_BRACK expr CLOSE_BRACK                #ListGetIndex
     |   '-' expr                                      #UnaryMinus
     |   NOT expr                                      #NotExpr
     |   expr (MOD_OPERATOR) expr                      #Mod
-    |   expr op=(MUL_OPERATOR | DIV_OPERATOR) expr       #MulDiv
-    |   expr op=(ADD_OPERATOR | SUB_OPERATOR) expr       #AddSub
+    |   expr op=(MUL_OPERATOR | DIV_OPERATOR) expr    #MulDiv
+    |   expr op=(ADD_OPERATOR | SUB_OPERATOR) expr    #AddSub
         // equality comparison (lowest priority op)
     |   expr EQUALS expr                              #EqualityComparison
         // variable reference

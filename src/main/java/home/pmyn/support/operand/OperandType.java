@@ -1,4 +1,4 @@
-package home.pmyn.support.operator.operand;
+package home.pmyn.support.operand;
 
 public enum OperandType {
   number, string, list, nothing

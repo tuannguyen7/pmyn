@@ -1,9 +1,8 @@
 package home.pmyn.support.function;
 
 import home.pmyn.antlr.PmynParser.FuncBodyContext;
-import home.pmyn.support.function.Function;
-import home.pmyn.support.operator.operand.Operand;
-import home.pmyn.antlr.FunctionVisitor;
+import home.pmyn.support.operand.Operand;
+import home.pmyn.antlr.parser.FunctionVisitor;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
