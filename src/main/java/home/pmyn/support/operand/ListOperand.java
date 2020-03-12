@@ -31,7 +31,7 @@ public class ListOperand implements Operand, Iterable<Operand> {
 
   @Override
   public String toString() {
-    return operands.stream().map(Operand::toString).collect(Collectors.joining(","));
+    return operands.stream().map(Operand::toString).collect(Collectors.joining(", "));
   }
 
   public List<Operand> getOperands() {

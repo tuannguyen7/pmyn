@@ -150,6 +150,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitListGetIndex(PmynParser.ListGetIndexContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code BooleanRef}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanRef(PmynParser.BooleanRefContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BooleanRef}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanRef(PmynParser.BooleanRefContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -210,6 +222,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitNotExpr(PmynParser.NotExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ObjectAttribute}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectAttribute(PmynParser.ObjectAttributeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectAttribute}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ParenExpr}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -233,6 +257,18 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEqualityComparison(PmynParser.EqualityComparisonContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AndOrLogic}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndOrLogic(PmynParser.AndOrLogicContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AndOrLogic}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndOrLogic(PmynParser.AndOrLogicContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link PmynParser#sublist}.
 	 * @param ctx the parse tree
@@ -293,4 +329,14 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExprList(PmynParser.ExprListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#booleanLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanLiteral(PmynParser.BooleanLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#booleanLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanLiteral(PmynParser.BooleanLiteralContext ctx);
 }

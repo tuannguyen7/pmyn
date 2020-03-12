@@ -34,11 +34,15 @@ expr:   // func call like f(), f(x), f(1,2)
     |   expr op=(MUL_OPERATOR | DIV_OPERATOR) expr    #MulDiv
     |   expr op=(ADD_OPERATOR | SUB_OPERATOR) expr    #AddSub
         // equality comparison (lowest priority op)
-    |   expr EQUALS expr                              #EqualityComparison
+    |   expr op=(EQUALS | GREATER_THAN | GT_EQ | LESS_THAN | LT_EQ | NOT_EQ_1 | NOT_EQ_2) expr         #EqualityComparison
+    |   expr op=(AND | OR) expr                       #AndOrLogic
         // variable reference
+//    |   mapInitializier                               #MapRef
+    |   ID DOT ID                                     #ObjectAttribute
     |   ID                                            #VarRef
     |   NUMBER                                        #NumRef
     |   STRING                                        #StringRef
+    |   booleanLiteral                                #BooleanRef
     |   OPEN_PAREN expr CLOSE_PAREN                   #ParenExpr
     ;
 
@@ -49,6 +53,12 @@ sublist : sub (',' sub)* ;
 sub :   expr
     ;
 
+//mapVarInitializier
+//  : ID ':' expr
+//  | ID ':' mapInitializier;
+//
+//mapInitializier: OPEN_BRACE (mapVarInitializier (',' mapVarInitializier)* (',')? )? CLOSE_BRACE;
+
 functionDecl: DEF ID varArgs OPEN_BRACE NEW_LINE* funcBody NEW_LINE* CLOSE_BRACE;
 
 varArgs : OPEN_PAREN exprList? CLOSE_PAREN ;
@@ -56,6 +66,11 @@ varArgs : OPEN_PAREN exprList? CLOSE_PAREN ;
 funcBody: stat* ;
 
 exprList : expr (',' expr)* ;   // arg list
+
+booleanLiteral
+    :   'true'
+    |   'false'
+    ;
 
 IF : 'if' ;
 THEN : 'then' ;
@@ -90,6 +105,7 @@ OPEN_BRACE : '{' ;
 CLOSE_BRACE : '}' ;
 
 COMMA : ',';
+DOT : '.';
 COLON : ':';
 SEMI_COLON : ';';
 ASSIGN : '=';

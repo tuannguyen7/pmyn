@@ -1,0 +1,13 @@
+count_cate = [object("cate_id", "cate2_id1", "count", 5), object("cate_id", "cate2_id2", "count", 9)]
+order = object("order_code", "code_01", "count_cate", count_cate)
+###
+def getCateId(countCate) {
+    return countCate.cate_id
+}
+print(map(getCateId, order.count_cate))
+tmp = count_cate[0]
+res = tmp.count > 8
+res2 = tmp.count == 5
+print(res)
+print(res2)
+

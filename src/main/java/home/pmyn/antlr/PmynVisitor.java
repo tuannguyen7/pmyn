@@ -95,6 +95,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitListGetIndex(PmynParser.ListGetIndexContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code BooleanRef}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanRef(PmynParser.BooleanRefContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -130,6 +137,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNotExpr(PmynParser.NotExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ObjectAttribute}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ParenExpr}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -143,6 +157,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEqualityComparison(PmynParser.EqualityComparisonContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AndOrLogic}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndOrLogic(PmynParser.AndOrLogicContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmynParser#sublist}.
 	 * @param ctx the parse tree
@@ -179,4 +200,10 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExprList(PmynParser.ExprListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#booleanLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanLiteral(PmynParser.BooleanLiteralContext ctx);
 }

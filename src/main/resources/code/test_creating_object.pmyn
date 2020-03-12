@@ -1,0 +1,3 @@
+obj = object("name", "Tuấn", "age", 20)
+print(obj.name)
+print(obj.age)

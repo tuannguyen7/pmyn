@@ -1,0 +1,15 @@
+count_cate = [object("cate_id", "cate2_id1", "count", 5),object("cate_id", "cate2_id2", "count", 9)]
+order = object("order_code", "code_01", "cate2ids", ["cate2_id1", "cate2_id2"], "count_cate", count_cate)
+#print(order.order_code)
+#print(order.cate2ids)
+#print(order.count_cate)
+tmp = order.count_cate
+first = tmp[0]
+print(tmp[0])
+print(first.count)
+def getCount(countObj) {
+  return countObj.count + 3
+}
+counts = map(getCount, tmp)
+print("-----")
+print(counts)

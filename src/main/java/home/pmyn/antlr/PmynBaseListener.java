@@ -162,6 +162,18 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBooleanRef(PmynParser.BooleanRefContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBooleanRef(PmynParser.BooleanRefContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUnaryMinus(PmynParser.UnaryMinusContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -222,6 +234,18 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterObjectAttribute(PmynParser.ObjectAttributeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParenExpr(PmynParser.ParenExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -241,6 +265,18 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEqualityComparison(PmynParser.EqualityComparisonContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAndOrLogic(PmynParser.AndOrLogicContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAndOrLogic(PmynParser.AndOrLogicContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -313,6 +349,18 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitExprList(PmynParser.ExprListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBooleanLiteral(PmynParser.BooleanLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBooleanLiteral(PmynParser.BooleanLiteralContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
