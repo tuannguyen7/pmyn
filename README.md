@@ -5,16 +5,20 @@
 
 # Getting started
 ## Datatypes
-There are 3 datatypes in Pmyn:
-1. Numbers
+There are 4 datatypes in Pmyn:
+1. Integers
 
-   Numbers are all represented as float value in Pmyn.
+   Integers are like: 1, 230, 444.
 
-2. Strings
+2. Decimals
+
+   Decimals are like: 2.0, 4.0, 333.2.
+
+3. Strings
 
    Strings are enclosed in double\-quotes or single-quotes. Examples: `"text 1"`, `"string 2"`, `'single-quoutes string'`.
 
-3. Booleans
+4. Booleans
 
    Booleans can be one of `true` or `false`.
 
@@ -27,6 +31,7 @@ There are 3 datatypes in Pmyn:
    ```
    years = [2010, 2011, 2012, 2013]
    second_year = years[1]
+   # second_year = 2011
    ```
    >**Note**: Like many programming language, Lists in Pmyn start at index 0
    
@@ -34,12 +39,25 @@ There are 3 datatypes in Pmyn:
 
    An object is like dictionary in Python. The only way you can create an object is calling built-in function `object`. Example: 
    ```
-   object("name", "Pmyn", "age", 1, "types", ["String", "Number", "Boolean"], "isCool", true)
+   object("name", "Pmyn", "age", 1, "types", ["String", "Number", "Boolean"], "is_cool", true)
+   #{
+   #   "name": "Pmyn",
+   #   "age": 1,
+   #   "types": ["String", "Number", "Boolean"],
+   #   "is_cool": true
+   #}
    ```
-   Objects can be nested in other objects, example:
+   Objects can be nested in other object, example:
    ```
    conanDoyle = object("name", "Arthur Conan Doyle", "born", 1914)
    book = object("title", "Sherlock Holme", "author", conanDoyle)
+   #{
+   #   "title": "Sherlock Holme",
+   #   "author": {
+   #      "name": "Arthur Conan Doyle",
+   #      "born": 1914
+   #   }
+   #}
    ```
 
 ## Functions
@@ -55,8 +73,10 @@ There are 3 datatypes in Pmyn:
        num3 = num1 + num2
        return num3
    }
+   sum = myFunction(2, 5)
+   # sum = 7 
    ```
-   Note that function must has a `return` statement at the end even you dont want to return anything.
+   Note that function must have a `return` statement at the end even if you don't want to return anything.
    > **Warning**: function can only access variables inside function body. Therefore, refer to outside variable will definitely cause error while running.
 
 ## Operators
