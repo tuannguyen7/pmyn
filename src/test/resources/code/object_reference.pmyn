@@ -1,0 +1,6 @@
+student = object("name", "Holmes", "classes", ["Math", "Physic", "Chemistry"], "best_friend", object("name", "Watson", "class", ["Geography"]))
+class_1 = (student.classes)[1]
+print(class_1)
+print((student.classes)[1])
+print((student.best_friend).name)
+print(((student.best_friend).class)[0])

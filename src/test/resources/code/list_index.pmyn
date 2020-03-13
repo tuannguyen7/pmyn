@@ -1,0 +1,8 @@
+str_arr = ["hello", "there"]
+integer_arr = [1, 2, 3, 4]
+decimal_arr = [1.0, 2.0, 10.3]
+boolean_arr = [true, false, true, true]
+print(str_arr[1])
+print(integer_arr[0])
+print(decimal_arr[2])
+print(boolean_arr[3])

@@ -2,20 +2,20 @@ package home.pmyn.antlr.parser;
 
 import home.pmyn.antlr.PmynParser.FuncBodyContext;
 import home.pmyn.antlr.PmynParser.ReturnStatementContext;
-import home.pmyn.support.operand.Operand;
-import home.pmyn.support.operand.NothingOperand;
+import home.pmyn.support.datatype.PmynType;
+import home.pmyn.support.datatype.NothingPmynType;
 import java.util.Map;
 
 public class FunctionVisitor extends MyVisitor {
 
-  Operand returnedValue = NothingOperand.newInstance();
+  PmynType returnedValue = NothingPmynType.newInstance();
 
-  public FunctionVisitor(Map<String, Operand> variables) {
+  public FunctionVisitor(Map<String, PmynType> variables) {
     super(variables);
   }
 
   @Override
-  public Operand visitFuncBody(FuncBodyContext ctx) {
+  public PmynType visitFuncBody(FuncBodyContext ctx) {
     for (var stat : ctx.stat()) {
       visit(stat);
     }
@@ -23,7 +23,7 @@ public class FunctionVisitor extends MyVisitor {
   }
 
   @Override
-  public Operand visitReturnStatement(ReturnStatementContext ctx) {
+  public PmynType visitReturnStatement(ReturnStatementContext ctx) {
     returnedValue = visit(ctx.expr());
     return returnedValue;
   }

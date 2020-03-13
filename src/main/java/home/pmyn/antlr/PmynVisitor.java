@@ -19,11 +19,11 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCompilationUnit(PmynParser.CompilationUnitContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PmynParser#varAssginment}.
+	 * Visit a parse tree produced by {@link PmynParser#varAssignment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarAssginment(PmynParser.VarAssginmentContext ctx);
+	T visitVarAssignment(PmynParser.VarAssignmentContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code VariableAssignmentStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -95,13 +95,6 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitListGetIndex(PmynParser.ListGetIndexContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code BooleanRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBooleanRef(PmynParser.BooleanRefContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -109,19 +102,12 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnaryMinus(PmynParser.UnaryMinusContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code StringRef}
+	 * Visit a parse tree produced by the {@code LiteralRef}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStringRef(PmynParser.StringRefContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code NumRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumRef(PmynParser.NumRefContext ctx);
+	T visitLiteralRef(PmynParser.LiteralRefContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code FuncCall}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -129,6 +115,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFuncCall(PmynParser.FuncCallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprInsideParens}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprInsideParens(PmynParser.ExprInsideParensContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code NotExpr}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -143,13 +136,6 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ParenExpr}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParenExpr(PmynParser.ParenExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code EqualityComparison}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -201,9 +187,33 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprList(PmynParser.ExprListContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PmynParser#decimalLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDecimalLiteral(PmynParser.DecimalLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntegerLiteral(PmynParser.IntegerLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringLiteral(PmynParser.StringLiteralContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PmynParser#booleanLiteral}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBooleanLiteral(PmynParser.BooleanLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLiteral(PmynParser.LiteralContext ctx);
 }

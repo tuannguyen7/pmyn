@@ -20,15 +20,15 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitCompilationUnit(PmynParser.CompilationUnitContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PmynParser#varAssginment}.
+	 * Enter a parse tree produced by {@link PmynParser#varAssignment}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarAssginment(PmynParser.VarAssginmentContext ctx);
+	void enterVarAssignment(PmynParser.VarAssignmentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link PmynParser#varAssginment}.
+	 * Exit a parse tree produced by {@link PmynParser#varAssignment}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarAssginment(PmynParser.VarAssginmentContext ctx);
+	void exitVarAssignment(PmynParser.VarAssignmentContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code VariableAssignmentStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -150,18 +150,6 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitListGetIndex(PmynParser.ListGetIndexContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code BooleanRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanRef(PmynParser.BooleanRefContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code BooleanRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanRef(PmynParser.BooleanRefContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -174,29 +162,17 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitUnaryMinus(PmynParser.UnaryMinusContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code StringRef}
+	 * Enter a parse tree produced by the {@code LiteralRef}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterStringRef(PmynParser.StringRefContext ctx);
+	void enterLiteralRef(PmynParser.LiteralRefContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code StringRef}
+	 * Exit a parse tree produced by the {@code LiteralRef}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitStringRef(PmynParser.StringRefContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code NumRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumRef(PmynParser.NumRefContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code NumRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumRef(PmynParser.NumRefContext ctx);
+	void exitLiteralRef(PmynParser.LiteralRefContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code FuncCall}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -209,6 +185,18 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFuncCall(PmynParser.FuncCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ExprInsideParens}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprInsideParens(PmynParser.ExprInsideParensContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ExprInsideParens}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprInsideParens(PmynParser.ExprInsideParensContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code NotExpr}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -233,18 +221,6 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ParenExpr}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterParenExpr(PmynParser.ParenExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ParenExpr}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitParenExpr(PmynParser.ParenExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code EqualityComparison}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -330,6 +306,36 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitExprList(PmynParser.ExprListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link PmynParser#decimalLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecimalLiteral(PmynParser.DecimalLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#decimalLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecimalLiteral(PmynParser.DecimalLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerLiteral(PmynParser.IntegerLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerLiteral(PmynParser.IntegerLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(PmynParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(PmynParser.StringLiteralContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link PmynParser#booleanLiteral}.
 	 * @param ctx the parse tree
 	 */
@@ -339,4 +345,14 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBooleanLiteral(PmynParser.BooleanLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterLiteral(PmynParser.LiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitLiteral(PmynParser.LiteralContext ctx);
 }

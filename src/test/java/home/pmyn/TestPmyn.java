@@ -14,7 +14,43 @@ public class TestPmyn {
 
   @Test
   public void testParentheses() throws IOException {
-    CharStream input = CharStreams.fromFileName("src/test/resources/test_parentheses1.pmyn");
+    CharStream input = CharStreams.fromFileName("src/test/resources/code/test_parentheses1.pmyn");
+    PmynLexer lexer = new PmynLexer(input);
+    CommonTokenStream tokens = new CommonTokenStream(lexer);
+    PmynParser parser = new PmynParser(tokens);
+    ParseTree parseTree = parser.compilationUnit();
+
+    MyVisitor visitor = new MyVisitor();
+    visitor.visit(parseTree);
+  }
+
+  @Test
+  public void testParenObject() throws IOException {
+    CharStream input = CharStreams.fromFileName("src/test/resources/code/object_reference.pmyn");
+    PmynLexer lexer = new PmynLexer(input);
+    CommonTokenStream tokens = new CommonTokenStream(lexer);
+    PmynParser parser = new PmynParser(tokens);
+    ParseTree parseTree = parser.compilationUnit();
+
+    MyVisitor visitor = new MyVisitor();
+    visitor.visit(parseTree);
+  }
+
+  @Test
+  public void testCreatingArray() throws IOException {
+    CharStream input = CharStreams.fromFileName("src/test/resources/code/array_creating.pmyn");
+    PmynLexer lexer = new PmynLexer(input);
+    CommonTokenStream tokens = new CommonTokenStream(lexer);
+    PmynParser parser = new PmynParser(tokens);
+    ParseTree parseTree = parser.compilationUnit();
+
+    MyVisitor visitor = new MyVisitor();
+    visitor.visit(parseTree);
+  }
+
+  @Test
+  public void testGettingElementByIndexArray() throws IOException {
+    CharStream input = CharStreams.fromFileName("src/test/resources/code/list_index.pmyn");
     PmynLexer lexer = new PmynLexer(input);
     CommonTokenStream tokens = new CommonTokenStream(lexer);
     PmynParser parser = new PmynParser(tokens);

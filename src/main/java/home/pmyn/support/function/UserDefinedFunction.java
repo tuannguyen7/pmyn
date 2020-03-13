@@ -1,7 +1,7 @@
 package home.pmyn.support.function;
 
 import home.pmyn.antlr.PmynParser.FuncBodyContext;
-import home.pmyn.support.operand.Operand;
+import home.pmyn.support.datatype.PmynType;
 import home.pmyn.antlr.parser.FunctionVisitor;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +22,8 @@ public class UserDefinedFunction implements Function {
   }
 
   @Override
-  public Operand apply(Operand... params) {
-    Map<String, Operand> variables = IntStream.range(0, paramIds.size())
+  public PmynType apply(PmynType... params) {
+    Map<String, PmynType> variables = IntStream.range(0, paramIds.size())
         .boxed()
         .collect(Collectors.toUnmodifiableMap(paramIds::get, index -> params[index]));
 

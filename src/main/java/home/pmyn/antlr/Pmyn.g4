@@ -10,11 +10,11 @@ package home.pmyn.antlr;
 
 compilationUnit: stat+ ;
 
-varAssginment
+varAssignment
     :  ID ASSIGN expr
     ;
 
-stat:   varAssginment  NEW_LINE                       #VariableAssignmentStatement
+stat:   varAssignment  NEW_LINE                       #VariableAssignmentStatement
     //|   IF expr THEN stat (ELSE stat)?        #IfElseStatement
     |   RETURN expr?  NEW_LINE                        #ReturnStatement
         // func call
@@ -23,11 +23,13 @@ stat:   varAssginment  NEW_LINE                       #VariableAssignmentStateme
     |   functionDecl NEW_LINE                         #FuncDef
     ;
 
-expr:   // func call like f(), f(x), f(1,2)
-        ID varArgs                                    #FuncCall
-    |   OPEN_BRACK sublist CLOSE_BRACK                #ListRef
+expr:
+        '(' expr ')'                                  #ExprInsideParens
+    // func call like f(), f(x), f(1,2)
+    |   ID varArgs                                    #FuncCall
+    |   '[' sublist ']'                               #ListRef
         // array index like a[i], a[i][j]
-    |   ID OPEN_BRACK expr CLOSE_BRACK                #ListGetIndex
+    |   expr '[' expr ']'                               #ListGetIndex
     |   '-' expr                                      #UnaryMinus
     |   NOT expr                                      #NotExpr
     |   expr (MOD_OPERATOR) expr                      #Mod
@@ -38,12 +40,10 @@ expr:   // func call like f(), f(x), f(1,2)
     |   expr op=(AND | OR) expr                       #AndOrLogic
         // variable reference
 //    |   mapInitializier                               #MapRef
-    |   ID DOT ID                                     #ObjectAttribute
+    // Reference object's attribute like student.name
+    |   expr '.' ID                                   #ObjectAttribute
     |   ID                                            #VarRef
-    |   NUMBER                                        #NumRef
-    |   STRING                                        #StringRef
-    |   booleanLiteral                                #BooleanRef
-    |   OPEN_PAREN expr CLOSE_PAREN                   #ParenExpr
+    |   literal                                       #LiteralRef
     ;
 
 //lambda: LAMBDA lambdaVararg ':' NEW_LINE lambdaBody ;
@@ -67,9 +67,22 @@ funcBody: stat* ;
 
 exprList : expr (',' expr)* ;   // arg list
 
+decimalLiteral : FLOAT ;
+
+integerLiteral : INT ;
+
+stringLiteral : STRING ;
+
 booleanLiteral
     :   'true'
     |   'false'
+    ;
+
+literal
+    : decimalLiteral
+    | integerLiteral
+    | booleanLiteral
+    | stringLiteral
     ;
 
 IF : 'if' ;
@@ -118,13 +131,9 @@ LETTER : [a-zA-Z] ;
 fragment
 DIGIT : [0-9] ;
 
-fragment
 INT :   DIGIT+ ;
 
-fragment
 FLOAT:  DIGIT+ '.' DIGIT+ ;
-
-NUMBER: (INT | FLOAT) ;
 
 STRING
     :   '"' ( ~[\\"] )*? '"'

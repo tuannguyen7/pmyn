@@ -30,13 +30,13 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarAssginment(PmynParser.VarAssginmentContext ctx) { }
+	@Override public void enterVarAssignment(PmynParser.VarAssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarAssginment(PmynParser.VarAssginmentContext ctx) { }
+	@Override public void exitVarAssignment(PmynParser.VarAssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -162,18 +162,6 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBooleanRef(PmynParser.BooleanRefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBooleanRef(PmynParser.BooleanRefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterUnaryMinus(PmynParser.UnaryMinusContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -186,25 +174,13 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStringRef(PmynParser.StringRefContext ctx) { }
+	@Override public void enterLiteralRef(PmynParser.LiteralRefContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStringRef(PmynParser.StringRefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNumRef(PmynParser.NumRefContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNumRef(PmynParser.NumRefContext ctx) { }
+	@Override public void exitLiteralRef(PmynParser.LiteralRefContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -217,6 +193,18 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFuncCall(PmynParser.FuncCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprInsideParens(PmynParser.ExprInsideParensContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprInsideParens(PmynParser.ExprInsideParensContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -241,18 +229,6 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParenExpr(PmynParser.ParenExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParenExpr(PmynParser.ParenExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -354,6 +330,42 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterDecimalLiteral(PmynParser.DecimalLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDecimalLiteral(PmynParser.DecimalLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntegerLiteral(PmynParser.IntegerLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntegerLiteral(PmynParser.IntegerLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStringLiteral(PmynParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStringLiteral(PmynParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBooleanLiteral(PmynParser.BooleanLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -361,6 +373,18 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBooleanLiteral(PmynParser.BooleanLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLiteral(PmynParser.LiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLiteral(PmynParser.LiteralContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

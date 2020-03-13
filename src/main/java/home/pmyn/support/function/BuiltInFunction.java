@@ -1,13 +1,17 @@
 package home.pmyn.support.function;
 
-import home.pmyn.support.operand.ListOperand;
-import home.pmyn.support.operand.NumberOperand;
-import home.pmyn.support.operand.ObjectOperand;
-import home.pmyn.support.operand.Operand;
-import home.pmyn.support.operand.NothingOperand;
-import home.pmyn.support.operand.StringOperand;
+import home.pmyn.helper.FunctionHelper;
+import home.pmyn.support.datatype.IntegerPmynType;
+import home.pmyn.support.datatype.ListPmynType;
+import home.pmyn.support.datatype.DecimalPmynType;
+import home.pmyn.support.datatype.NumberPmynType;
+import home.pmyn.support.datatype.ObjectPmynType;
+import home.pmyn.support.datatype.PmynType;
+import home.pmyn.support.datatype.NothingPmynType;
+import home.pmyn.support.datatype.PmynType.Type;
+import home.pmyn.support.datatype.StringPmynType;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -20,44 +24,85 @@ public class BuiltInFunction {
   public static final Function Pow =  params -> {
     if (params.length != 2)
       throw new IllegalArgumentException("Expect 2 parameters but got " + params.length);
-    NumberOperand left = (NumberOperand) params[0];
-    NumberOperand right = (NumberOperand)params[1];
-    return new NumberOperand(Math.pow(left.getNum(), right.getNum()));
+
+    DecimalPmynType left = (DecimalPmynType) params[0];
+    DecimalPmynType right = (DecimalPmynType)params[1];
+    return new DecimalPmynType(Math.pow(left.getNum(), right.getNum()));
   };
 
   public static final Function Print = params -> {
     log.debug("call function print with params {}", params);
     System.out.println(params[0].toString());
-    return NothingOperand.newInstance();
+    return NothingPmynType.newInstance();
   };
 
   public static final Function Multiply = params -> {
-    double first = ((NumberOperand)params[0]).getNum();
-    double second = ((NumberOperand)params[1]).getNum();
-    return new NumberOperand(first*second);
+    NumberPmynType[] numberParams = Arrays.stream(params)
+        .map(e -> (NumberPmynType)e)
+        .toArray(NumberPmynType[]::new);
+
+    double first = numberParams[0].decimalValue();
+    double second = numberParams[1].decimalValue();
+    double result = first * second;
+    Type returnType = FunctionHelper.returnTypeOfNumber(numberParams);
+    switch (returnType) {
+      case decimal: return new DecimalPmynType(result);
+      case integer: return new IntegerPmynType((long)result);
+      default: return NothingPmynType.newInstance();
+    }
   };
 
   public static final Function Divide = params -> {
-    double first = ((NumberOperand)params[0]).getNum();
-    double second = ((NumberOperand)params[1]).getNum();
-    return new NumberOperand(first/second);
+    NumberPmynType[] numberParams = Arrays.stream(params)
+        .map(e -> (NumberPmynType)e)
+        .toArray(NumberPmynType[]::new);
+
+    double first = numberParams[0].decimalValue();
+    double second = numberParams[1].decimalValue();
+    double result = first / second;
+    Type returnType = FunctionHelper.returnTypeOfNumber(numberParams);
+    switch (returnType) {
+      case decimal: return new DecimalPmynType(result);
+      case integer: return new IntegerPmynType((long)result);
+      default: return NothingPmynType.newInstance();
+    }
   };
 
   public static final Function Add = params -> {
-    double first = ((NumberOperand)params[0]).getNum();
-    double second = ((NumberOperand)params[1]).getNum();
-    return new NumberOperand(first - second);
+    NumberPmynType[] numberParams = Arrays.stream(params)
+        .map(e -> (NumberPmynType)e)
+        .toArray(NumberPmynType[]::new);
+
+    double first = numberParams[0].decimalValue();
+    double second = numberParams[1].decimalValue();
+    double result = first + second;
+    Type returnType = FunctionHelper.returnTypeOfNumber(numberParams);
+    switch (returnType) {
+      case decimal: return new DecimalPmynType(result);
+      case integer: return new IntegerPmynType((long)result);
+      default: return NothingPmynType.newInstance();
+    }
   };
 
   public static final Function Sub = params -> {
-    double first = ((NumberOperand)params[0]).getNum();
-    double second = ((NumberOperand)params[1]).getNum();
-    return new NumberOperand(first - second);
+    NumberPmynType[] numberParams = Arrays.stream(params)
+        .map(e -> (NumberPmynType)e)
+        .toArray(NumberPmynType[]::new);
+
+    double first = numberParams[0].decimalValue();
+    double second = numberParams[1].decimalValue();
+    double result = first - second;
+    Type returnType = FunctionHelper.returnTypeOfNumber(numberParams);
+    switch (returnType) {
+      case decimal: return new DecimalPmynType(result);
+      case integer: return new IntegerPmynType((long)result);
+      default: return NothingPmynType.newInstance();
+    }
   };
 
   public static final Function getAttribute = params -> {
-    ObjectOperand object = (ObjectOperand)params[0];
-    String attributeName = ((StringOperand)params[1]).getValue();
+    ObjectPmynType object = (ObjectPmynType)params[0];
+    String attributeName = ((StringPmynType)params[1]).getValue();
     return object.getAttribute(attributeName);
   };
 
@@ -65,20 +110,20 @@ public class BuiltInFunction {
     if (params.length % 2 != 0)
       throw new IllegalArgumentException("Number of params must be even");
 
-    java.util.Map<String, Operand> attributes = new HashMap<>();
+    java.util.Map<String, PmynType> attributes = new HashMap<>();
     for (int i = 0; i < params.length; i += 2) {
-      String attributeName = ((StringOperand)params[i]).getValue();
+      String attributeName = ((StringPmynType)params[i]).getValue();
       attributes.put(attributeName, params[i+1]);
     }
-    return new ObjectOperand(attributes);
+    return new ObjectPmynType(attributes);
   };
 
   public static final Function Map = params -> {
     Function f = (Function) params[0];
-    Iterable<Operand> iterable = (Iterable)params[1];
+    Iterable<PmynType> iterable = (Iterable)params[1];
 
     return new
-        ListOperand(
+        ListPmynType(
           StreamSupport.stream(iterable.spliterator(), false)
               .map(f::apply)
               .collect(Collectors.toUnmodifiableList()));

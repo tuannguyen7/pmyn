@@ -1,0 +1,14 @@
+str_arr = ["hello", "there"]
+integer_arr = [1, 2, 3, 4]
+decimal_arr = [1.0, 2.0, 10.3]
+boolean_arr = [true, false, true, true]
+print(str_arr)
+print(integer_arr)
+print(decimal_arr)
+print(boolean_arr)
+two_dimension_arr = [[1, 2], [3, 4]]
+print(two_dimension_arr)
+# expect [1,2]
+print(two_dimension_arr[0])
+# expect 4
+print(two_dimension_arr[1][1])

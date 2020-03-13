@@ -1,17 +1,17 @@
-package home.pmyn.support.operand;
+package home.pmyn.support.datatype;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ObjectOperand implements Operand {
+public class ObjectPmynType implements PmynType {
 
-  private Map<String, Operand> attribute;
+  private Map<String, PmynType> attribute;
 
-  public ObjectOperand(Map<String, Operand> attribute) {
+  public ObjectPmynType(Map<String, PmynType> attribute) {
     this.attribute = attribute;
   }
 
-  public Operand getAttribute(String name) {
+  public PmynType getAttribute(String name) {
     if (!attribute.containsKey(name)) {
       throw new IllegalArgumentException("Object has no attribute " + name);
     }
@@ -22,5 +22,10 @@ public class ObjectOperand implements Operand {
   public String toString() {
     return attribute.entrySet().stream().map(e -> e.getKey() + ": " + e.getValue().toString())
         .collect(Collectors.joining(",", "{", "}"));
+  }
+
+  @Override
+  public Type type() {
+    return Type.object;
   }
 }
