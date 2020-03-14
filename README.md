@@ -40,25 +40,33 @@ There are 4 datatypes in Pmyn:
    An object is like dictionary in Python. The only way you can create an object is calling built-in function `object`. Example: 
    ```
    object("name", "Pmyn", "age", 1, "types", ["String", "Number", "Boolean"], "is_cool", true)
-   #{
+   # {
    #   "name": "Pmyn",
    #   "age": 1,
    #   "types": ["String", "Number", "Boolean"],
    #   "is_cool": true
-   #}
+   # }
    ```
    Objects can be nested in other object, example:
    ```
    conanDoyle = object("name", "Arthur Conan Doyle", "born", 1914)
    book = object("title", "Sherlock Holme", "author", conanDoyle)
-   #{
+   # {
    #   "title": "Sherlock Holme",
    #   "author": {
    #      "name": "Arthur Conan Doyle",
    #      "born": 1914
    #   }
-   #}
+   # }
    ```
+   Object's attributes are can be accessed by name:
+   ```
+   book_title = book.title
+   # book_title = "Sherlock Holme"
+   author_name = (book.author).name
+   # author_name = "Arthur Conan Doyle"
+   ```
+   >**Note**: You cann't modify object's attributes
 
 ## Functions
 1. Built-in functions
