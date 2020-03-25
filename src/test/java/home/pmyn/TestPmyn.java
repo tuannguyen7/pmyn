@@ -71,4 +71,16 @@ public class TestPmyn {
     MyVisitor visitor = new MyVisitor();
     visitor.visit(parseTree);
   }
+
+  @Test
+  public void testFunctionScope() throws IOException {
+    CharStream input = CharStreams.fromFileName("src/test/resources/code/function_scope.pmyn");
+    PmynLexer lexer = new PmynLexer(input);
+    CommonTokenStream tokens = new CommonTokenStream(lexer);
+    PmynParser parser = new PmynParser(tokens);
+    ParseTree parseTree = parser.compilationUnit();
+
+    MyVisitor visitor = new MyVisitor();
+    visitor.visit(parseTree);
+  }
 }

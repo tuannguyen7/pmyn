@@ -1,0 +1,22 @@
+a = 10
+
+def func_a() {
+  a = 20
+  print(a)
+  return a
+}
+
+def func_b() {
+  print(a)
+  return a
+}
+
+def func_c(a) {
+
+  return a
+}
+
+print(func_a())
+print(func_b())
+print(func_c(50))
+

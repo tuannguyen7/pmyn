@@ -17,6 +17,7 @@ import home.pmyn.antlr.PmynParser.NotExprContext;
 import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
 import home.pmyn.antlr.PmynParser.StringLiteralContext;
 import home.pmyn.antlr.PmynParser.VarAssignmentContext;
+import home.pmyn.support.datatype.PmynType.Type;
 import home.pmyn.support.function.BuiltInFunction;
 import home.pmyn.antlr.PmynParser.AddSubContext;
 import home.pmyn.antlr.PmynParser.FuncCallContext;
@@ -34,7 +35,11 @@ import home.pmyn.support.datatype.DecimalPmynType;
 import home.pmyn.support.datatype.ObjectPmynType;
 import home.pmyn.support.datatype.PmynType;
 import home.pmyn.support.datatype.StringPmynType;
-import java.util.HashMap;
+import home.pmyn.support.scope.DefaultScope;
+import home.pmyn.support.scope.GlobalScope;
+import home.pmyn.support.scope.PmynScope;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -43,19 +48,18 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import static home.pmyn.helper.MessageFormatHelper.format;
 public class MyVisitor extends PmynBaseVisitor<PmynType> {
 
-  Map<String, PmynType>  variables = new HashMap<>();
-  Map<String, Function> functionMap = Map.of(
-      "pow", BuiltInFunction.Pow,
-      "print", BuiltInFunction.Print,
-      "map",BuiltInFunction.Map,
-      "sub", BuiltInFunction.Sub,
-      "object", BuiltInFunction.CreateObject);
-  Map<String, Function> userDefinedFunc = new HashMap<>();
+  private final PmynScope curScope;
 
-  public MyVisitor() {}
+  public MyVisitor() {
+    this.curScope = new DefaultScope(GlobalScope.newInstance());
+  }
+
+  public MyVisitor(PmynScope scope) {
+    this.curScope = scope;
+  }
 
   public MyVisitor(Map<String, PmynType> variables) {
-    this.variables.putAll(variables);
+    curScope = new DefaultScope(GlobalScope.newInstance(), variables);
   }
 
   @Override
@@ -66,7 +70,7 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
 
     String variableName = ctx.ID().getText();
     PmynType assignedValue = visit(ctx.expr());
-    variables.put(variableName, assignedValue);
+    curScope.define(variableName, assignedValue);
     return assignedValue;
   }
 
@@ -92,13 +96,10 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
   @Override
   public PmynType visitVarRef(VarRefContext ctx) {
     String key = ctx.ID().getText();
-    if (variables.containsKey(key))
-      return variables.get(key);
-
-    if (userDefinedFunc.containsKey(key))
-      return userDefinedFunc.get(key);
-
-    throw new IllegalArgumentException("Not found variable " + ctx.ID().getText());
+    PmynType pmynVar = curScope.resolve(key);
+    if (pmynVar == null)
+      throw new IllegalArgumentException("Not found variable " + ctx.ID().getText());
+    return pmynVar;
   }
 
   @Override
@@ -206,23 +207,26 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
 
   @Override
   public PmynType visitFuncCall(FuncCallContext ctx) {
-    Function f;
-    if (functionMap.containsKey(ctx.ID().getText()))
-      f = functionMap.get(ctx.ID().getText());
-    else if (userDefinedFunc.containsKey(ctx.ID().getText()))
-      f = userDefinedFunc.get(ctx.ID().getText());
-    else
-      throw new IllegalArgumentException("Not found function " + ctx.ID().getText());
+    PmynType var = curScope.resolve(ctx.ID().getText());
 
+    if (var == null)
+      throw new IllegalArgumentException("Not found function " + ctx.ID().getText());
+    if (var.type() != Type.function)
+      throw new IllegalArgumentException(ctx.ID().getText() + " isn't a function");
+
+    Function f = (Function)var;
     if (ctx.varArgs() == null)
       return f.apply();
 
-    PmynType[] pmynTypes = ctx.varArgs()
-        .exprList()
-        .expr()
-        .stream()
-        .map(this::visit)
-        .toArray(PmynType[]::new);
+    PmynType[] pmynTypes;
+    if (ctx.varArgs().exprList() == null) {
+      pmynTypes = new PmynType[0];
+    } else {
+      pmynTypes = ctx.varArgs().exprList().expr()
+          .stream()
+          .map(this::visit)
+          .toArray(PmynType[]::new);
+    }
 
     return f.apply(pmynTypes);
   }
@@ -230,12 +234,16 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
   @Override
   public PmynType visitFuncDef(FuncDefContext ctx) {
 
-    List<String> paramIds =
-        ctx.functionDecl().varArgs().exprList().expr().stream()
+    List<String> paramIds;
+    if (ctx.functionDecl().varArgs().exprList() == null)
+      paramIds = Collections.emptyList();
+    else
+      paramIds = ctx.functionDecl().varArgs().exprList().expr().stream()
             .map(ParserRuleContext::getText)
             .collect(Collectors.toUnmodifiableList());
-    Function udFunc = new UserDefinedFunction(ctx.functionDecl().ID().getText(), paramIds, ctx.functionDecl().funcBody());
-    userDefinedFunc.put(ctx.functionDecl()
+    PmynScope scope = new DefaultScope(curScope);
+    Function udFunc = new UserDefinedFunction(ctx.functionDecl().ID().getText(), paramIds, ctx.functionDecl().funcBody(), scope);
+    curScope.define(ctx.functionDecl()
         .ID().getText(), udFunc);
     return udFunc;
   }
