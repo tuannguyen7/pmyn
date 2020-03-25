@@ -78,6 +78,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitFuncDef(PmynParser.FuncDefContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code NewLine}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewLine(PmynParser.NewLineContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NewLine}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewLine(PmynParser.NewLineContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code VarRef}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree

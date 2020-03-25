@@ -3,7 +3,7 @@ plugins {
     id 'antlr'
 }
 
-group 'org.example'
+group 'home.pmyn'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.11

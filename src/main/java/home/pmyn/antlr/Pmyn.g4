@@ -21,6 +21,7 @@ stat:   varAssignment  NEW_LINE                       #VariableAssignmentStateme
 //    |   IF expr ':'
     |   expr NEW_LINE                                 #ExprStatement
     |   functionDecl NEW_LINE                         #FuncDef
+    |   NEW_LINE                                      #NewLine
     ;
 
 expr:

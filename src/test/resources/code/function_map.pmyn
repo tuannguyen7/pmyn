@@ -1,0 +1,12 @@
+student1 = object("name", "Holmes", "classes", ["Math", "Physic", "Chemistry"], "best_friend", object("name", "Watson", "class", ["Geography"]))
+student2 = object("name", "Watson", "classes", ["Physic", "Chemistry"], "best_friend", student1)
+
+students = [student1, student2]
+def get_name(obj) {
+  return obj.name
+}
+
+names = map(get_name, students)
+print(names)
+
+print("Done")
