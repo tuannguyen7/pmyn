@@ -4,14 +4,14 @@ import home.pmyn.antlr.PmynParser.FuncBodyContext;
 import home.pmyn.antlr.PmynParser.ReturnStatementContext;
 import home.pmyn.support.datatype.PmynType;
 import home.pmyn.support.datatype.NothingPmynType;
-import java.util.Map;
+import home.pmyn.support.scope.PmynScope;
 
 public class FunctionVisitor extends MyVisitor {
 
   PmynType returnedValue = NothingPmynType.newInstance();
 
-  public FunctionVisitor(Map<String, PmynType> variables) {
-    super(variables);
+  public FunctionVisitor(PmynScope scope) {
+    super(scope);
   }
 
   @Override

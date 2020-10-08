@@ -4,6 +4,7 @@ import home.pmyn.antlr.parser.MyVisitor;
 import home.pmyn.antlr.PmynLexer;
 import home.pmyn.antlr.PmynParser;
 import java.io.IOException;
+import java.util.Collections;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -22,7 +23,7 @@ public class FunctionApp {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    MyVisitor visitor = new MyVisitor(Collections.emptyMap());
     visitor.visit(parseTree);
 
   }
