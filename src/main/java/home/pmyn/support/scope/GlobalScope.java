@@ -3,6 +3,8 @@ package home.pmyn.support.scope;
 import home.pmyn.support.datatype.PmynType;
 import home.pmyn.support.function.BuiltInFunction;
 import home.pmyn.support.function.Function;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class GlobalScope implements PmynScope {
@@ -13,6 +15,8 @@ public class GlobalScope implements PmynScope {
       "map",BuiltInFunction.Map,
       "sub", BuiltInFunction.Sub,
       "object", BuiltInFunction.CreateObject);
+  private List<String> outputHub;
+  private boolean testEnable = false;
 
   private GlobalScope() {}
 
@@ -20,6 +24,12 @@ public class GlobalScope implements PmynScope {
 
   public static PmynScope newInstance() {
     return scope;
+  }
+
+  public PmynScope enableTest(List<String> outputHub) {
+    this.testEnable = true;
+    this.outputHub = outputHub;
+    return this;
   }
 
   @Override

@@ -8,14 +8,18 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.11
 
+ext {
+    antlrVersion = "4.9.2"
+    logbackVersion = "1.2.3"
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.8'
-    antlr "org.antlr:antlr4:8"
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-
+    implementation group: 'org.antlr', name: 'antlr4-runtime', version: antlrVersion
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
+    antlr "org.antlr:antlr4:${antlrVersion}"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

@@ -2,7 +2,7 @@ package home.pmyn;
 
 import home.pmyn.antlr.PmynLexer;
 import home.pmyn.antlr.PmynParser;
-import home.pmyn.antlr.parser.MyVisitor;
+import home.pmyn.antlr.parser.DefaultVisitor;
 import java.io.IOException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -20,7 +20,7 @@ public class TestPmyn {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    DefaultVisitor visitor = new DefaultVisitor();
     visitor.visit(parseTree);
   }
 
@@ -32,7 +32,7 @@ public class TestPmyn {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    DefaultVisitor visitor = new DefaultVisitor();
     visitor.visit(parseTree);
   }
 
@@ -44,7 +44,7 @@ public class TestPmyn {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    DefaultVisitor visitor = new DefaultVisitor();
     visitor.visit(parseTree);
   }
 
@@ -56,7 +56,7 @@ public class TestPmyn {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    DefaultVisitor visitor = new DefaultVisitor();
     visitor.visit(parseTree);
   }
 
@@ -68,7 +68,7 @@ public class TestPmyn {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    DefaultVisitor visitor = new DefaultVisitor();
     visitor.visit(parseTree);
   }
 
@@ -80,7 +80,7 @@ public class TestPmyn {
     PmynParser parser = new PmynParser(tokens);
     ParseTree parseTree = parser.compilationUnit();
 
-    MyVisitor visitor = new MyVisitor();
+    DefaultVisitor visitor = new DefaultVisitor();
     visitor.visit(parseTree);
   }
 }

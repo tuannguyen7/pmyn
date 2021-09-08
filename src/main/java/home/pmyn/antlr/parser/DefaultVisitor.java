@@ -4,19 +4,26 @@ package home.pmyn.antlr.parser;
 import home.pmyn.antlr.PmynBaseVisitor;
 import home.pmyn.antlr.PmynParser;
 import home.pmyn.antlr.PmynParser.AndOrLogicContext;
-import home.pmyn.antlr.PmynParser.BooleanLiteralContext;
+import home.pmyn.antlr.PmynParser.BlockStmtContext;
+import home.pmyn.antlr.PmynParser.BooleanFalseLiteralContext;
+import home.pmyn.antlr.PmynParser.BooleanTrueLiteralContext;
+import home.pmyn.antlr.PmynParser.CompilationUnitContext;
 import home.pmyn.antlr.PmynParser.DecimalLiteralContext;
+import home.pmyn.antlr.PmynParser.ElseStmtContext;
 import home.pmyn.antlr.PmynParser.EqualityComparisonContext;
 import home.pmyn.antlr.PmynParser.ExprInsideParensContext;
 import home.pmyn.antlr.PmynParser.ExprStatementContext;
+import home.pmyn.antlr.PmynParser.IfElseStatementContext;
+import home.pmyn.antlr.PmynParser.IfElseStmtContext;
 import home.pmyn.antlr.PmynParser.IntegerLiteralContext;
 import home.pmyn.antlr.PmynParser.ListGetIndexContext;
-import home.pmyn.antlr.PmynParser.LiteralRefContext;
-import home.pmyn.antlr.PmynParser.MulDivContext;
+import home.pmyn.antlr.PmynParser.MulDivModContext;
 import home.pmyn.antlr.PmynParser.NotExprContext;
 import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
 import home.pmyn.antlr.PmynParser.StringLiteralContext;
-import home.pmyn.antlr.PmynParser.VarAssignmentContext;
+import home.pmyn.antlr.PmynParser.VarAssignmentStmtContext;
+import home.pmyn.antlr.PmynParser.VariableAssignmentStatementContext;
+import home.pmyn.support.datatype.NumberPmynType;
 import home.pmyn.support.datatype.PmynType.Type;
 import home.pmyn.support.function.BuiltInFunction;
 import home.pmyn.antlr.PmynParser.AddSubContext;
@@ -38,32 +45,26 @@ import home.pmyn.support.datatype.StringPmynType;
 import home.pmyn.support.scope.DefaultScope;
 import home.pmyn.support.scope.GlobalScope;
 import home.pmyn.support.scope.PmynScope;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import static home.pmyn.helper.MessageFormatHelper.format;
-public class MyVisitor extends PmynBaseVisitor<PmynType> {
+public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
   private final PmynScope curScope;
 
-  public MyVisitor() {
+  public DefaultVisitor() {
     this.curScope = new DefaultScope(GlobalScope.newInstance());
   }
 
-  public MyVisitor(PmynScope scope) {
+  public DefaultVisitor(PmynScope scope) {
     this.curScope = scope;
   }
 
-  public MyVisitor(Map<String, PmynType> variables) {
-    curScope = new DefaultScope(GlobalScope.newInstance(), variables);
-  }
-
   @Override
-  public PmynType visitVarAssignment(VarAssignmentContext ctx) {
+  public PmynType visitVarAssignmentStmt(VarAssignmentStmtContext ctx) {
     if (ctx.ASSIGN() == null) {
       return null;
     }
@@ -76,7 +77,7 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
 
   @Override
   public PmynType visitReturnStatement(ReturnStatementContext ctx) {
-    return super.visitReturnStatement(ctx);
+    throw new IllegalArgumentException("Not allow return here");
   }
 
   @Override
@@ -110,11 +111,18 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
   @Override
   public PmynType visitUnaryMinus(UnaryMinusContext ctx) {
     PmynType pmynType = visit(ctx.expr());
-    if (!(pmynType instanceof DecimalPmynType))
-      throw new IllegalArgumentException("Bad operand for unary -");
 
-    DecimalPmynType casted = (DecimalPmynType) pmynType;
-    return new DecimalPmynType(-casted.getNum());
+    if (pmynType instanceof DecimalPmynType) {
+      DecimalPmynType casted = (DecimalPmynType) pmynType;
+      return new DecimalPmynType(-casted.decimalValue());
+    }
+
+    if (pmynType instanceof IntegerPmynType) {
+      IntegerPmynType casted = (IntegerPmynType) pmynType;
+      return new IntegerPmynType(-casted.integerValue());
+    }
+
+    throw new IllegalArgumentException("Bad operand for unary -");
   }
 
   @Override
@@ -135,11 +143,6 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
   }
 
   @Override
-  public PmynType visitLiteralRef(LiteralRefContext ctx) {
-    return visit(ctx.literal());
-  }
-
-  @Override
   public PmynType visitDecimalLiteral(DecimalLiteralContext ctx) {
     double num = Double.parseDouble(ctx.FLOAT().getText());
     return new DecimalPmynType(num);
@@ -157,6 +160,22 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
     return new StringPmynType(fullStringRef.substring(1, fullStringRef.length()-1));
   }
 
+
+  @Override
+  public PmynType visitVariableAssignmentStatement(VariableAssignmentStatementContext ctx) {
+    return super.visitVariableAssignmentStatement(ctx);
+  }
+
+  @Override
+  public PmynType visitBooleanTrueLiteral(BooleanTrueLiteralContext ctx) {
+    return BooleanPmynType.True;
+  }
+
+  @Override
+  public PmynType visitBooleanFalseLiteral(BooleanFalseLiteralContext ctx) {
+    return BooleanPmynType.False;
+  }
+
   @Override
   public PmynType visitNotExpr(NotExprContext ctx) {
     return super.visitNotExpr(ctx);
@@ -167,10 +186,10 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
     PmynType first = visit(ctx.expr(0));
     PmynType second = visit(ctx.expr(1));
 
-    if (!(first instanceof DecimalPmynType) || !(second instanceof DecimalPmynType))
+    if (!(first instanceof NumberPmynType) || !(second instanceof NumberPmynType))
       throw new IllegalArgumentException(ctx.expr(0).getText() + " and " + ctx.expr(1).getText() + " must be Number");
-    double n1 = ((DecimalPmynType)first).getNum();
-    double n2 = ((DecimalPmynType)second).getNum();
+    double n1 = ((NumberPmynType)first).decimalValue();
+    double n2 = ((NumberPmynType)second).decimalValue();
 
     boolean result;
     switch (ctx.op.getType()) {
@@ -215,14 +234,14 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
       throw new IllegalArgumentException(ctx.ID().getText() + " isn't a function");
 
     Function f = (Function)var;
-    if (ctx.varArgs() == null)
+    if (ctx.funcArgs() == null || ctx.funcArgs().isEmpty())
       return f.apply();
 
     PmynType[] pmynTypes;
-    if (ctx.varArgs().exprList() == null) {
+    if (ctx.funcArgs() == null) {
       pmynTypes = new PmynType[0];
     } else {
-      pmynTypes = ctx.varArgs().exprList().expr()
+      pmynTypes = ctx.funcArgs().expr()
           .stream()
           .map(this::visit)
           .toArray(PmynType[]::new);
@@ -233,16 +252,16 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
 
   @Override
   public PmynType visitFuncDef(FuncDefContext ctx) {
-
     List<String> paramIds;
-    if (ctx.functionDecl().varArgs().exprList() == null)
+    var funcParams = ctx.functionDecl().funcParams();
+    if (funcParams == null || funcParams.ID() == null || funcParams.isEmpty())
       paramIds = Collections.emptyList();
     else
-      paramIds = ctx.functionDecl().varArgs().exprList().expr().stream()
-            .map(ParserRuleContext::getText)
+      paramIds = ctx.functionDecl().funcParams().ID().stream()
+            .map(ParseTree::getText)
             .collect(Collectors.toUnmodifiableList());
     PmynScope scope = new DefaultScope(curScope);
-    Function udFunc = new UserDefinedFunction(ctx.functionDecl().ID().getText(), paramIds, ctx.functionDecl().funcBody(), scope);
+    Function udFunc = new UserDefinedFunction(ctx.functionDecl().ID().getText(), paramIds, ctx.functionDecl().blockStmt(), scope);
     curScope.define(ctx.functionDecl()
         .ID().getText(), udFunc);
     return udFunc;
@@ -258,25 +277,64 @@ public class MyVisitor extends PmynBaseVisitor<PmynType> {
   }
 
   @Override
-  public PmynType visitMulDiv(MulDivContext ctx) {
+  public PmynType visitMulDivMod(MulDivModContext ctx) {
     switch (ctx.op.getType()) {
       case PmynParser.MUL_OPERATOR: return BuiltInFunction.Multiply.apply(visit(ctx.expr(0)), visit(ctx.expr(1)));
       case PmynParser.DIV_OPERATOR: return BuiltInFunction.Divide.apply(visit(ctx.expr(0)), visit(ctx.expr(1)));
+      case PmynParser.MOD_OPERATOR: return BuiltInFunction.Mod.apply(visit(ctx.expr(0)), visit(ctx.expr(1)));
       default: throw new IllegalArgumentException("Illegal type " + ctx.op.getType());
     }
   }
 
-  @Override
-  public PmynType visitBooleanLiteral(BooleanLiteralContext ctx) {
-    switch (ctx.getText()) {
-      case "true": return BooleanPmynType.True;
-      case "false": return BooleanPmynType.False;
-      default: throw new IllegalArgumentException("Not a valid boolean " + ctx.getText());
-    }
-  }
 
   @Override
   public PmynType visitExprInsideParens(ExprInsideParensContext ctx) {
     return visit(ctx.expr());
+  }
+
+  @Override
+  public PmynType visitIfElseStatement(IfElseStatementContext ctx) {
+    return visitIfElseStmt(ctx.ifElseStmt());
+  }
+
+  @Override
+  public PmynType visitCompilationUnit(CompilationUnitContext ctx) {
+    return super.visitCompilationUnit(ctx);
+  }
+
+  @Override
+  public PmynType visitIfElseStmt(IfElseStmtContext ctx) {
+    for (int i = 0; i < ctx.expr().size(); i++) {
+      var expr = ctx.expr().get(i);
+      PmynType exprResult = visit(expr);
+      if (!(exprResult instanceof BooleanPmynType)) {
+        throw new IllegalArgumentException("Not a boolean expression " + expr);
+      }
+
+      boolean isTrue = ((BooleanPmynType) exprResult).getValue();
+      if (isTrue) {
+        return visit(ctx.blockStmt().get(i));
+      }
+    }
+
+    if (ctx.elseStmt() != null) {
+      return visitElseStmt(ctx.elseStmt());
+    }
+
+    return null;
+  }
+
+
+  @Override
+  public PmynType visitElseStmt(ElseStmtContext ctx) {
+    return visit(ctx.blockStmt());
+  }
+
+  @Override
+  public PmynType visitBlockStmt(BlockStmtContext ctx) {
+    for (var stmt : ctx.stat()) {
+      visit(stmt);
+    }
+    return null;
   }
 }

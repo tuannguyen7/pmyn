@@ -25,14 +25,16 @@ public class BuiltInFunction {
     if (params.length != 2)
       throw new IllegalArgumentException("Expect 2 parameters but got " + params.length);
 
-    DecimalPmynType left = (DecimalPmynType) params[0];
-    DecimalPmynType right = (DecimalPmynType)params[1];
-    return new DecimalPmynType(Math.pow(left.getNum(), right.getNum()));
+    NumberPmynType left = (NumberPmynType) params[0];
+    NumberPmynType right = (NumberPmynType)params[1];
+    return new DecimalPmynType(Math.pow(left.decimalValue(), right.decimalValue()));
   };
 
   public static final Function Print = params -> {
-    log.debug("call function print with params {}", params);
-    System.out.println(params[0].toString());
+    if (params.length != 0) {
+      log.debug("call function print with params {}", params[0]);
+      System.out.println(params[0].toString());
+    }
     return NothingPmynType.newInstance();
   };
 
@@ -66,6 +68,16 @@ public class BuiltInFunction {
       case integer: return new IntegerPmynType((long)result);
       default: return NothingPmynType.newInstance();
     }
+  };
+
+  public static final Function Mod = params -> {
+    NumberPmynType[] numberParams = Arrays.stream(params)
+        .map(e -> (NumberPmynType)e)
+        .toArray(NumberPmynType[]::new);
+
+    long first = numberParams[0].integerValue();
+    long second = numberParams[1].integerValue();
+    return new IntegerPmynType(first%second);
   };
 
   public static final Function Add = params -> {

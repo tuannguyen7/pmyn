@@ -6,7 +6,12 @@ def get_name(obj) {
   return obj.name
 }
 
+def my_func_2() {
+  print("Hello world")
+}
+
 names = map(get_name, students)
 print(names)
 
 print("Done")
+my_func_2()

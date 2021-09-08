@@ -33,7 +33,7 @@ There are 4 datatypes in Pmyn:
    second_year = years[1]
    # second_year = 2011
    ```
-   >**Note**: Like many programming language, Lists in Pmyn start at index 0
+   >**Note**: Lists in Pmyn are 0-based index
    
 - Objects
 
@@ -107,7 +107,11 @@ Like Python comments in Pmyn started by character '#'. Examples:
 # This is a multiple
 # lines comment
 ```
-    
+
+# References
+1. ANTLR the definition guide
+2. (Crafting interpreters)[https://craftinginterpreters.com/contents.html]
+
 # Fun facts
 1. Its name `Pmyn` is a combination of 2 words: **py**thon and **m**i**n**imum. I rearranged the characters a bit to make it pronounceable.
-2. Pmyn's main goal is learning how to create a programming language, Pmyn shouldn't
+2. Pmyn's main goal is learning how to create a programming language
