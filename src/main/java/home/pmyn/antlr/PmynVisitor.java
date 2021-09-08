@@ -54,6 +54,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprStatement(PmynParser.ExprStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code PrintStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintStatement(PmynParser.PrintStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code NewLine}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree

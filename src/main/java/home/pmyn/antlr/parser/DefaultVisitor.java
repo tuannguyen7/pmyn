@@ -20,6 +20,7 @@ import home.pmyn.antlr.PmynParser.ListGetIndexContext;
 import home.pmyn.antlr.PmynParser.MulDivModContext;
 import home.pmyn.antlr.PmynParser.NotExprContext;
 import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
+import home.pmyn.antlr.PmynParser.PrintStatementContext;
 import home.pmyn.antlr.PmynParser.StringLiteralContext;
 import home.pmyn.antlr.PmynParser.VarAssignmentStmtContext;
 import home.pmyn.antlr.PmynParser.VariableAssignmentStatementContext;
@@ -45,6 +46,7 @@ import home.pmyn.support.datatype.StringPmynType;
 import home.pmyn.support.scope.DefaultScope;
 import home.pmyn.support.scope.GlobalScope;
 import home.pmyn.support.scope.PmynScope;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,13 +56,20 @@ import static home.pmyn.helper.MessageFormatHelper.format;
 public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
   private final PmynScope curScope;
+  private List<VisitorListener> listeners;
 
   public DefaultVisitor() {
     this.curScope = new DefaultScope(GlobalScope.newInstance());
+    this.listeners = new ArrayList<>();
   }
 
   public DefaultVisitor(PmynScope scope) {
     this.curScope = scope;
+    this.listeners = new ArrayList<>();
+  }
+
+  public void addListener(VisitorListener listener) {
+    this.listeners.add(listener);
   }
 
   @Override
@@ -81,8 +90,17 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
   }
 
   @Override
+  public PmynType visitPrintStatement(PrintStatementContext ctx) {
+    PmynType value = visit(ctx.expr());
+    System.out.println(value);
+    return null;
+  }
+
+  @Override
   public PmynType visitExprStatement(ExprStatementContext ctx) {
-    return visit(ctx.expr());
+    PmynType value = visit(ctx.expr());
+    exitExpr(value);
+    return value;
   }
 
   @Override
@@ -286,7 +304,6 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
     }
   }
 
-
   @Override
   public PmynType visitExprInsideParens(ExprInsideParensContext ctx) {
     return visit(ctx.expr());
@@ -324,7 +341,6 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
     return null;
   }
 
-
   @Override
   public PmynType visitElseStmt(ElseStmtContext ctx) {
     return visit(ctx.blockStmt());
@@ -336,5 +352,11 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
       visit(stmt);
     }
     return null;
+  }
+
+  private void exitExpr(PmynType value) {
+    for (var l : listeners) {
+      l.exitExpr(value);
+    }
   }
 }

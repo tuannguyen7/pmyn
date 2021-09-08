@@ -13,6 +13,7 @@ stat:
     |   RETURN expr?          NEW_LINE           #ReturnStatement
     |   functionDecl          NEW_LINE           #FuncDef
     |   expr                  NEW_LINE           #ExprStatement
+    |   'debug' '(' expr ')'          NEW_LINE           #PrintStatement
     |   NEW_LINE                                 #NewLine
     ;
 

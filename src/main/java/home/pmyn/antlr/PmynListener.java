@@ -80,6 +80,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitExprStatement(PmynParser.ExprStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code PrintStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStatement(PmynParser.PrintStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PrintStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStatement(PmynParser.PrintStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code NewLine}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
