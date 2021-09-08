@@ -5,26 +5,20 @@ compilationUnit: stat+ ;
 
 stat:
         varAssignmentStmt     NEW_LINE           #VariableAssignmentStatement
-    |   ifElseStmt            NEW_LINE           #IfElseStatement
-    |   RETURN expr?          NEW_LINE           #ReturnStatement
-    |   functionDecl          NEW_LINE           #FuncDef
     |   expr                  NEW_LINE           #ExprStatement
+    |   'debug' '(' expr ')'          NEW_LINE           #PrintStatement
     |   NEW_LINE                                 #NewLine
     ;
 
 expr:
-        '(' expr ')'                                                 #ExprInsideParens
-    |   ID '(' funcArgs? ')'                                         #FuncCall       // func call like f(), f(x), f(1,2)
-    |   '[' sublist ']'                                              #ListRef
-    |   expr '[' expr ']'                                            #ListGetIndex   // array index like a[i], a[i][j]
+       '(' expr ')'                                                 #ExprInsideParens
     |   '-' expr                                                     #UnaryMinus
+    |   expr POW_OPERATOR expr                                      #Pow
     |   expr op=(MUL_OPERATOR | DIV_OPERATOR | MOD_OPERATOR) expr    #MulDivMod
     |   expr op=(ADD_OPERATOR | SUB_OPERATOR) expr                   #AddSub
-        // equality comparison (lowest priority op)
     |   NOT expr                                                     #NotExpr
-    |   expr op=(AND | OR) expr                       #AndOrLogic
+    |   expr op=(AND | OR) expr                                      #AndOrLogic
     |   expr op=(EQUALS | GREATER_THAN | GT_EQ | LESS_THAN | LT_EQ | NOT_EQ_1 | NOT_EQ_2) expr         #EqualityComparison
-    |   expr '.' ID                                   #ObjectAttribute  // Reference object's attribute like student.name
     |   ID                                            #VarRef
     |   STRING                                        #StringLiteral
     |   INT                                           #IntegerLiteral
@@ -33,26 +27,7 @@ expr:
     |   FALSE                                         #BooleanFalseLiteral
     ;
 
-sublist : sub (',' sub)* ;
-
-sub :   expr
-    ;
-
-varAssignmentStmt
-    :  ID ASSIGN expr
-    ;
-
-ifElseStmt : IF '(' expr ')' blockStmt (ELSE IF '(' expr ')' blockStmt)* elseStmt? ;
-
-elseStmt : ELSE blockStmt ;
-
-blockStmt : '{' stat* '}' ;
-
-functionDecl: DEF ID '(' funcParams? ')' blockStmt;
-
-funcParams : ID (',' ID)* ;
-
-funcArgs : expr (',' expr)* ;
+varAssignmentStmt :  ID ASSIGN expr ;
 
 IF : 'if' ;
 THEN : 'then' ;
@@ -69,7 +44,7 @@ DIV_OPERATOR : '/'  ;
 ADD_OPERATOR : '+'  ;
 SUB_OPERATOR : '-'  ;
 MOD_OPERATOR : '%'  ;
-POWER_OPERATOR : '**';
+POW_OPERATOR : '**';
 
 LESS_THAN : '<';
 GREATER_THAN : '>';
@@ -92,6 +67,9 @@ COLON : ':';
 SEMI_COLON : ';';
 ASSIGN : '=';
 
+TRUE: 'true' ;
+FALSE: 'false' ;
+
 ID  :   LETTER (LETTER | DIGIT | '_')* ;
 
 fragment
@@ -104,13 +82,11 @@ INT :   DIGIT+ ;
 
 FLOAT:  DIGIT+ '.' DIGIT+ ;
 
-STRING
-    :   '"' ( ~[\\"] )*? '"'
-    |   '\'' (~[\\'] )*? '\''
-    ;
+STRING: '"' (ESC|.)*? '"'
+      | '\'' (ESC|.)*? '\'' ;
 
-TRUE: 'true' ;
-FALSE: 'false' ;
+fragment
+ESC : '\\"' | '\\\\' ; // 2-char sequences \" and \\
 
 NEW_LINE: '\r'? '\n' ;
 
@@ -119,3 +95,4 @@ WS  :   [ \t\r]+ -> skip ;
 SL_COMMENT
     :   '#' .*? (NEW_LINE|EOF) -> skip
     ;
+

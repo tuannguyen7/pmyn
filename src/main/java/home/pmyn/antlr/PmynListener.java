@@ -32,42 +32,6 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code IfElseStatement}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 */
-	void enterIfElseStatement(PmynParser.IfElseStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code IfElseStatement}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 */
-	void exitIfElseStatement(PmynParser.IfElseStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ReturnStatement}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 */
-	void enterReturnStatement(PmynParser.ReturnStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ReturnStatement}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 */
-	void exitReturnStatement(PmynParser.ReturnStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FuncDef}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncDef(PmynParser.FuncDefContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FuncDef}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncDef(PmynParser.FuncDefContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
@@ -116,18 +80,6 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitVarRef(PmynParser.VarRefContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ListRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterListRef(PmynParser.ListRefContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ListRef}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitListRef(PmynParser.ListRefContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code AddSub}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -140,18 +92,6 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitAddSub(PmynParser.AddSubContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ListGetIndex}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterListGetIndex(PmynParser.ListGetIndexContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ListGetIndex}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitListGetIndex(PmynParser.ListGetIndexContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -163,18 +103,6 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitUnaryMinus(PmynParser.UnaryMinusContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FuncCall}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncCall(PmynParser.FuncCallContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FuncCall}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncCall(PmynParser.FuncCallContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MulDivMod}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -224,6 +152,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitDecimalLiteral(PmynParser.DecimalLiteralContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterPow(PmynParser.PowContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Pow}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitPow(PmynParser.PowContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code BooleanTrueLiteral}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -247,18 +187,6 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNotExpr(PmynParser.NotExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ObjectAttribute}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterObjectAttribute(PmynParser.ObjectAttributeContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ObjectAttribute}
-	 * labeled alternative in {@link PmynParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code IntegerLiteral}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -308,26 +236,6 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitEqualityComparison(PmynParser.EqualityComparisonContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link PmynParser#sublist}.
-	 * @param ctx the parse tree
-	 */
-	void enterSublist(PmynParser.SublistContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#sublist}.
-	 * @param ctx the parse tree
-	 */
-	void exitSublist(PmynParser.SublistContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#sub}.
-	 * @param ctx the parse tree
-	 */
-	void enterSub(PmynParser.SubContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#sub}.
-	 * @param ctx the parse tree
-	 */
-	void exitSub(PmynParser.SubContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link PmynParser#varAssignmentStmt}.
 	 * @param ctx the parse tree
 	 */
@@ -337,64 +245,4 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVarAssignmentStmt(PmynParser.VarAssignmentStmtContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#ifElseStmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterIfElseStmt(PmynParser.IfElseStmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#ifElseStmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitIfElseStmt(PmynParser.IfElseStmtContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#elseStmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterElseStmt(PmynParser.ElseStmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#elseStmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitElseStmt(PmynParser.ElseStmtContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#blockStmt}.
-	 * @param ctx the parse tree
-	 */
-	void enterBlockStmt(PmynParser.BlockStmtContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#blockStmt}.
-	 * @param ctx the parse tree
-	 */
-	void exitBlockStmt(PmynParser.BlockStmtContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#functionDecl}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionDecl(PmynParser.FunctionDeclContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#functionDecl}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionDecl(PmynParser.FunctionDeclContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#funcParams}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncParams(PmynParser.FuncParamsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#funcParams}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncParams(PmynParser.FuncParamsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link PmynParser#funcArgs}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncArgs(PmynParser.FuncArgsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link PmynParser#funcArgs}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncArgs(PmynParser.FuncArgsContext ctx);
 }
