@@ -129,6 +129,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitCompilationUnit(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitCompilationUnit(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CompilationUnitContext compilationUnit() throws RecognitionException {
@@ -187,6 +192,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitNewLine(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitNewLine(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class FuncDefContext extends StatContext {
 		public FunctionDeclContext functionDecl() {
@@ -202,6 +212,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitFuncDef(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitFuncDef(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class IfElseStatementContext extends StatContext {
 		public IfElseStmtContext ifElseStmt() {
@@ -216,6 +231,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitIfElseStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitIfElseStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ReturnStatementContext extends StatContext {
@@ -233,6 +253,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitReturnStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitReturnStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class ExprStatementContext extends StatContext {
 		public ExprContext expr() {
@@ -248,6 +273,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitExprStatement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitExprStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class VariableAssignmentStatementContext extends StatContext {
 		public VarAssignmentStmtContext varAssignmentStmt() {
@@ -262,6 +292,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitVariableAssignmentStatement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitVariableAssignmentStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -376,6 +411,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitVarRef(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitVarRef(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class ListRefContext extends ExprContext {
 		public TerminalNode OPEN_BRACK() { return getToken(PmynParser.OPEN_BRACK, 0); }
@@ -391,6 +431,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitListRef(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitListRef(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AddSubContext extends ExprContext {
@@ -412,6 +457,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitAddSub(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitAddSub(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class ListGetIndexContext extends ExprContext {
 		public List<ExprContext> expr() {
@@ -431,6 +481,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitListGetIndex(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitListGetIndex(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class UnaryMinusContext extends ExprContext {
 		public TerminalNode SUB_OPERATOR() { return getToken(PmynParser.SUB_OPERATOR, 0); }
@@ -445,6 +500,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitUnaryMinus(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitUnaryMinus(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class FuncCallContext extends ExprContext {
@@ -462,6 +522,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitFuncCall(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitFuncCall(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class MulDivModContext extends ExprContext {
@@ -484,6 +549,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitMulDivMod(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitMulDivMod(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class StringLiteralContext extends ExprContext {
 		public TerminalNode STRING() { return getToken(PmynParser.STRING, 0); }
@@ -495,6 +565,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitStringLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitStringLiteral(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ExprInsideParensContext extends ExprContext {
@@ -512,6 +587,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitExprInsideParens(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitExprInsideParens(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class DecimalLiteralContext extends ExprContext {
 		public TerminalNode FLOAT() { return getToken(PmynParser.FLOAT, 0); }
@@ -524,6 +604,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitDecimalLiteral(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitDecimalLiteral(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class BooleanTrueLiteralContext extends ExprContext {
 		public TerminalNode TRUE() { return getToken(PmynParser.TRUE, 0); }
@@ -535,6 +620,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitBooleanTrueLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitBooleanTrueLiteral(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class NotExprContext extends ExprContext {
@@ -550,6 +640,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitNotExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitNotExpr(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ObjectAttributeContext extends ExprContext {
@@ -567,6 +662,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitObjectAttribute(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitObjectAttribute(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class IntegerLiteralContext extends ExprContext {
 		public TerminalNode INT() { return getToken(PmynParser.INT, 0); }
@@ -579,6 +679,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitIntegerLiteral(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitIntegerLiteral(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	public static class BooleanFalseLiteralContext extends ExprContext {
 		public TerminalNode FALSE() { return getToken(PmynParser.FALSE, 0); }
@@ -590,6 +695,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitBooleanFalseLiteral(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitBooleanFalseLiteral(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AndOrLogicContext extends ExprContext {
@@ -610,6 +720,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitAndOrLogic(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitAndOrLogic(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class EqualityComparisonContext extends ExprContext {
@@ -635,6 +750,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitEqualityComparison(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitEqualityComparison(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -949,6 +1069,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitSublist(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitSublist(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SublistContext sublist() throws RecognitionException {
@@ -1005,6 +1130,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitSub(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitSub(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SubContext sub() throws RecognitionException {
@@ -1045,6 +1175,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitVarAssignmentStmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitVarAssignmentStmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1116,6 +1251,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitIfElseStmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitIfElseStmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1203,6 +1343,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitElseStmt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitElseStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ElseStmtContext elseStmt() throws RecognitionException {
@@ -1248,6 +1393,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitBlockStmt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitBlockStmt(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1312,6 +1462,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitFunctionDecl(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitFunctionDecl(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FunctionDeclContext functionDecl() throws RecognitionException {
@@ -1375,6 +1530,11 @@ public class PmynParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitFuncParams(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitFuncParams(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FuncParamsContext funcParams() throws RecognitionException {
@@ -1437,6 +1597,11 @@ public class PmynParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof PmynListener ) ((PmynListener)listener).exitFuncArgs(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof PmynVisitor ) return ((PmynVisitor<? extends T>)visitor).visitFuncArgs(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

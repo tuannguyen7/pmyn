@@ -4,7 +4,4 @@ build/
 .idea/
 
 # Build tool
-gradle/
 .gradle/
-gradlew
-gradlew.bat
