@@ -9,16 +9,12 @@ compilationUnit: stat+ ;
 
 stat:
         varAssignmentStmt     NEW_LINE           #VariableAssignmentStatement
-    //|   ifElseStmt            NEW_LINE           #IfElseStatement
-    //|   RETURN expr?          NEW_LINE           #ReturnStatement
-    //|   functionDecl          NEW_LINE           #FuncDef
     |   expr                  NEW_LINE           #ExprStatement
     |   NEW_LINE                                 #NewLine
     ;
 
 expr:
         '(' expr ')'                                                 #ExprInsideParens
-    //|   ID '(' funcArgs? ')'                                         #FuncCall       // func call like f(), f(x), f(1,2)
     |   '[' sublist ']'                                              #ListRef
     |   expr '[' expr ']'                                            #ListGetIndex   // array index like a[i], a[i][j]
     |   '-' expr                                                     #UnaryMinus
@@ -28,7 +24,6 @@ expr:
     |   NOT expr                                                     #NotExpr
     |   expr op=(AND | OR) expr                                      #AndOrLogic
     |   expr op=(EQUALS | GREATER_THAN | GT_EQ | LESS_THAN | LT_EQ | NOT_EQ_1 | NOT_EQ_2) expr         #EqualityComparison
-    //|   expr '.' ID                                   #ObjectAttribute  // Reference object's attribute like student.name
     |   ID                                            #VarRef
     |   STRING                                        #StringLiteral
     |   INT                                           #IntegerLiteral
@@ -42,18 +37,6 @@ sublist : sub (',' sub)* ;
 sub :   expr ;
 
 varAssignmentStmt :  ID ASSIGN expr ;
-
-// ifElseStmt : IF '(' expr ')' blockStmt (ELSE IF '(' expr ')' blockStmt)* elseStmt? ;
-
-// elseStmt : ELSE blockStmt ;
-
-// blockStmt : '{' stat* '}' ;
-
-// functionDecl: DEF ID '(' funcParams? ')' blockStmt;
-
-// funcParams : ID (',' ID)* ;
-
-// funcArgs : expr (',' expr)* ;
 
 IF : 'if' ;
 THEN : 'then' ;
