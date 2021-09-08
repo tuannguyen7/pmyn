@@ -752,23 +752,14 @@ public class PmynParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 					case 1:
 						{
-						_localctx = new AddSubContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new PowContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(45);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
 						setState(46);
-						((AddSubContext)_localctx).op = _input.LT(1);
-						_la = _input.LA(1);
-						if ( !(_la==ADD_OPERATOR || _la==SUB_OPERATOR) ) {
-							((AddSubContext)_localctx).op = (Token)_errHandler.recoverInline(this);
-						}
-						else {
-							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-							_errHandler.reportMatch(this);
-							consume();
-						}
+						match(POW_OPERATOR);
 						setState(47);
-						expr(13);
+						expr(12);
 						}
 						break;
 					case 2:
@@ -794,12 +785,21 @@ public class PmynParser extends Parser {
 						break;
 					case 3:
 						{
-						_localctx = new PowContext(new ExprContext(_parentctx, _parentState));
+						_localctx = new AddSubContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(51);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
 						setState(52);
-						match(POW_OPERATOR);
+						((AddSubContext)_localctx).op = _input.LT(1);
+						_la = _input.LA(1);
+						if ( !(_la==ADD_OPERATOR || _la==SUB_OPERATOR) ) {
+							((AddSubContext)_localctx).op = (Token)_errHandler.recoverInline(this);
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
+							consume();
+						}
 						setState(53);
 						expr(11);
 						}
@@ -945,7 +945,7 @@ public class PmynParser extends Parser {
 		"\3\3\3\3\3\3\3\3\3\3\3\3\5\3\35\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4.\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3"+
 		"\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4?\n\4\f\4\16\4B\13\4\3\5\3\5\3\5\3\5\3\5"+
-		"\2\3\6\6\2\4\6\b\2\6\3\2\17\20\4\2\r\16\21\21\3\2\13\f\3\2\23\31\2T\2"+
+		"\2\3\6\6\2\4\6\b\2\6\4\2\r\16\21\21\3\2\17\20\3\2\13\f\3\2\23\31\2T\2"+
 		"\13\3\2\2\2\4\34\3\2\2\2\6-\3\2\2\2\bC\3\2\2\2\n\f\5\4\3\2\13\n\3\2\2"+
 		"\2\f\r\3\2\2\2\r\13\3\2\2\2\r\16\3\2\2\2\16\3\3\2\2\2\17\20\5\b\5\2\20"+
 		"\21\7+\2\2\21\35\3\2\2\2\22\23\5\6\4\2\23\24\7+\2\2\24\35\3\2\2\2\25\26"+
@@ -955,11 +955,11 @@ public class PmynParser extends Parser {
 		"\".\3\2\2\2#$\7\20\2\2$.\5\6\4\17%&\7\n\2\2&.\5\6\4\13\'.\7\'\2\2(.\7"+
 		"*\2\2).\7(\2\2*.\7)\2\2+.\7%\2\2,.\7&\2\2-\36\3\2\2\2-#\3\2\2\2-%\3\2"+
 		"\2\2-\'\3\2\2\2-(\3\2\2\2-)\3\2\2\2-*\3\2\2\2-+\3\2\2\2-,\3\2\2\2.@\3"+
-		"\2\2\2/\60\f\16\2\2\60\61\t\2\2\2\61?\5\6\4\17\62\63\f\r\2\2\63\64\t\3"+
-		"\2\2\64?\5\6\4\16\65\66\f\f\2\2\66\67\7\22\2\2\67?\5\6\4\r89\f\n\2\29"+
-		":\t\4\2\2:?\5\6\4\13;<\f\t\2\2<=\t\5\2\2=?\5\6\4\n>/\3\2\2\2>\62\3\2\2"+
-		"\2>\65\3\2\2\2>8\3\2\2\2>;\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2A\7\3"+
-		"\2\2\2B@\3\2\2\2CD\7\'\2\2DE\7$\2\2EF\5\6\4\2F\t\3\2\2\2\7\r\34->@";
+		"\2\2\2/\60\f\16\2\2\60\61\7\22\2\2\61?\5\6\4\16\62\63\f\r\2\2\63\64\t"+
+		"\2\2\2\64?\5\6\4\16\65\66\f\f\2\2\66\67\t\3\2\2\67?\5\6\4\r89\f\n\2\2"+
+		"9:\t\4\2\2:?\5\6\4\13;<\f\t\2\2<=\t\5\2\2=?\5\6\4\n>/\3\2\2\2>\62\3\2"+
+		"\2\2>\65\3\2\2\2>8\3\2\2\2>;\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2A\7"+
+		"\3\2\2\2B@\3\2\2\2CD\7\'\2\2DE\7$\2\2EF\5\6\4\2F\t\3\2\2\2\7\r\34->@";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

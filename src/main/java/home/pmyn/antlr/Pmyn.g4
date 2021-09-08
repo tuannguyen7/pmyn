@@ -23,9 +23,9 @@ expr:
     //|   '[' sublist ']'                                              #ListRef
     //|   expr '[' expr ']'                                            #ListGetIndex   // array index like a[i], a[i][j]
     |   '-' expr                                                     #UnaryMinus
-    |   expr op=(ADD_OPERATOR | SUB_OPERATOR) expr                   #AddSub
+    |<assoc=right>  expr POW_OPERATOR expr                           #Pow
     |   expr op=(MUL_OPERATOR | DIV_OPERATOR | MOD_OPERATOR) expr    #MulDivMod
-    |   expr POW_OPERATOR expr                                       #Pow
+    |   expr op=(ADD_OPERATOR | SUB_OPERATOR) expr                   #AddSub
     |   NOT expr                                                     #NotExpr
     |   expr op=(AND | OR) expr                                      #AndOrLogic
     |   expr op=(EQUALS | GREATER_THAN | GT_EQ | LESS_THAN | LT_EQ | NOT_EQ_1 | NOT_EQ_2) expr         #EqualityComparison
