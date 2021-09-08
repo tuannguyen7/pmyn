@@ -112,10 +112,11 @@ INT :   DIGIT+ ;
 
 FLOAT:  DIGIT+ '.' DIGIT+ ;
 
-STRING
-    :   '"' ( ~[\\"] )*? '"'
-    |   '\'' (~[\\'] )*? '\''
-    ;
+STRING: '"' (ESC|.)*? '"'
+      | '\'' (ESC|.)*? '\'' ;
+
+fragment
+ESC : '\\"' | '\\\\' ; // 2-char sequences \" and \\
 
 NEW_LINE: '\r'? '\n' ;
 
