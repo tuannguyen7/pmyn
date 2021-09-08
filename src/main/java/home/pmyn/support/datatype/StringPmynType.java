@@ -1,6 +1,11 @@
 package home.pmyn.support.datatype;
 
-public class StringPmynType implements PmynType {
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+public class StringPmynType implements PmynType, Iterable<StringPmynType> {
 
   private final String value;
 
@@ -20,5 +25,19 @@ public class StringPmynType implements PmynType {
   @Override
   public Type type() {
     return Type.string;
+  }
+
+  @Override
+  public Iterator<StringPmynType> iterator() {
+    return Arrays.asList(value).stream().map(StringPmynType::new).iterator();
+  }
+
+  @Override
+  public void forEach(Consumer<? super StringPmynType> action) {
+  }
+
+  @Override
+  public Spliterator<StringPmynType> spliterator() {
+    return Arrays.asList(value).stream().map(StringPmynType::new).spliterator();
   }
 }

@@ -26,6 +26,34 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code IfElseStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElseStatement(PmynParser.IfElseStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code WhileStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStatement(PmynParser.WhileStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ForStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForStatement(PmynParser.ForStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PrintStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintStatement(PmynParser.PrintStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
@@ -169,4 +197,42 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVarAssignmentStmt(PmynParser.VarAssignmentStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#ifElseStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfElseStmt(PmynParser.IfElseStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#elseStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseStmt(PmynParser.ElseStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#blockStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlockStmt(PmynParser.BlockStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#whileStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStmt(PmynParser.WhileStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code forInStatement}
+	 * labeled alternative in {@link PmynParser#forStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForInStatement(PmynParser.ForInStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code forIndexStatement}
+	 * labeled alternative in {@link PmynParser#forStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForIndexStatement(PmynParser.ForIndexStatementContext ctx);
 }

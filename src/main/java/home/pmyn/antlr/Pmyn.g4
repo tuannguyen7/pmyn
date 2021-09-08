@@ -9,7 +9,10 @@ compilationUnit: stat+ ;
 
 stat:
         varAssignmentStmt     NEW_LINE           #VariableAssignmentStatement
-    //|   ifElseStmt            NEW_LINE           #IfElseStatement
+    |   ifElseStmt            NEW_LINE           #IfElseStatement
+    |   whileStmt             NEW_LINE           #WhileStatement
+    |   forStmt               NEW_LINE           #ForStatement
+    |   'debug' '(' expr ')'  NEW_LINE           #PrintStatement
     //|   RETURN expr?          NEW_LINE           #ReturnStatement
     //|   functionDecl          NEW_LINE           #FuncDef
     |   expr                  NEW_LINE           #ExprStatement
@@ -43,11 +46,17 @@ sub :   expr ;
 
 varAssignmentStmt :  ID ASSIGN expr ;
 
-// ifElseStmt : IF '(' expr ')' blockStmt (ELSE IF '(' expr ')' blockStmt)* elseStmt? ;
+ifElseStmt : IF '(' expr ')' blockStmt (ELSE IF '(' expr ')' blockStmt)* elseStmt? ;
 
-// elseStmt : ELSE blockStmt ;
+elseStmt : ELSE blockStmt ;
 
-// blockStmt : '{' stat* '}' ;
+blockStmt : '{' stat* '}' ;
+
+whileStmt : WHILE expr blockStmt;
+
+forStmt :
+            FOR ID IN expr blockStmt                          #forInStatement
+        |   FOR varAssignmentStmt ';' expr ';' stat blockStmt #forIndexStatement;
 
 // functionDecl: DEF ID '(' funcParams? ')' blockStmt;
 
@@ -64,6 +73,9 @@ DEF: 'def'  ;
 NOT: 'not'  ;
 AND: 'and'  ;
 OR: 'or'    ;
+WHILE: 'while'    ;
+IN: 'in'    ;
+FOR: 'for'  ;
 
 MUL_OPERATOR : '*'  ;
 DIV_OPERATOR : '/'  ;

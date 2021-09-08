@@ -11,24 +11,31 @@ import home.pmyn.antlr.PmynParser.DecimalLiteralContext;
 import home.pmyn.antlr.PmynParser.EqualityComparisonContext;
 import home.pmyn.antlr.PmynParser.ExprInsideParensContext;
 import home.pmyn.antlr.PmynParser.ExprStatementContext;
+import home.pmyn.antlr.PmynParser.ForInStatementContext;
+import home.pmyn.antlr.PmynParser.ForIndexStatementContext;
+import home.pmyn.antlr.PmynParser.ForStatementContext;
 import home.pmyn.antlr.PmynParser.IntegerLiteralContext;
 import home.pmyn.antlr.PmynParser.MulDivModContext;
 import home.pmyn.antlr.PmynParser.NotExprContext;
 import home.pmyn.antlr.PmynParser.PowContext;
+import home.pmyn.antlr.PmynParser.PrintStatementContext;
 import home.pmyn.antlr.PmynParser.StringLiteralContext;
+import home.pmyn.antlr.PmynParser.SubContext;
+import home.pmyn.antlr.PmynParser.SublistContext;
 import home.pmyn.antlr.PmynParser.VarAssignmentStmtContext;
 import home.pmyn.antlr.PmynParser.VariableAssignmentStatementContext;
 import home.pmyn.antlr.PmynParser.ListGetIndexContext;
 import home.pmyn.antlr.PmynParser.ListRefContext;
-//import home.pmyn.antlr.PmynParser.BlockStmtContext;
-//import home.pmyn.antlr.PmynParser.ElseStmtContext;
-//import home.pmyn.antlr.PmynParser.IfElseStatementContext;
-//import home.pmyn.antlr.PmynParser.IfElseStmtContext;
+import home.pmyn.antlr.PmynParser.BlockStmtContext;
+import home.pmyn.antlr.PmynParser.ElseStmtContext;
+import home.pmyn.antlr.PmynParser.IfElseStatementContext;
+import home.pmyn.antlr.PmynParser.IfElseStmtContext;
 //import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
 //import home.pmyn.antlr.PmynParser.FuncCallContext;
 //import home.pmyn.antlr.PmynParser.FuncDefContext;
 //import home.pmyn.antlr.PmynParser.ReturnStatementContext;
 
+import home.pmyn.antlr.PmynParser.WhileStatementContext;
 import home.pmyn.support.datatype.ListPmynType;
 import home.pmyn.support.datatype.NumberPmynType;
 import home.pmyn.support.function.BuiltInFunction;
@@ -45,6 +52,7 @@ import home.pmyn.support.scope.GlobalScope;
 import home.pmyn.support.scope.PmynScope;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -262,8 +270,108 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
     return list.getPmynTypes().get(index);
   }
 
-//
-//  @Override
+  @Override
+  public PmynType visitIfElseStatement(IfElseStatementContext ctx) {
+    return visitIfElseStmt(ctx.ifElseStmt());
+  }
+
+  @Override
+  public PmynType visitIfElseStmt(IfElseStmtContext ctx) {
+    for (int i = 0; i < ctx.expr().size(); i++) {
+      var expr = ctx.expr().get(i);
+      PmynType exprResult = visit(expr);
+      if (!(exprResult instanceof BooleanPmynType)) {
+        throw new IllegalArgumentException("Not a boolean expression " + expr.getText());
+      }
+
+      boolean isTrue = ((BooleanPmynType) exprResult).getValue();
+      if (isTrue) {
+        return visit(ctx.blockStmt().get(i));
+      }
+    }
+
+    if (ctx.elseStmt() != null) {
+      return visitElseStmt(ctx.elseStmt());
+    }
+
+    return null;
+  }
+
+  @Override
+  public PmynType visitElseStmt(ElseStmtContext ctx) {
+    return visit(ctx.blockStmt());
+  }
+
+  @Override
+  public PmynType visitBlockStmt(BlockStmtContext ctx) {
+    for (var stmt : ctx.stat()) {
+      visit(stmt);
+    }
+    return null;
+  }
+
+  @Override
+  public PmynType visitWhileStatement(WhileStatementContext ctx) {
+    PmynType exprResult = visit(ctx.whileStmt().expr());
+    if (!(exprResult instanceof BooleanPmynType))
+      throw new IllegalArgumentException("Not a boolean expression " + ctx.whileStmt().expr().getText());
+    BooleanPmynType cond = (BooleanPmynType) exprResult;
+
+    while (cond.getValue()) {
+      visit(ctx.whileStmt().blockStmt());
+      cond = (BooleanPmynType) visit(ctx.whileStmt().expr());
+    }
+
+    return null;
+  }
+
+  @Override
+  public PmynType visitForStatement(ForStatementContext ctx) {
+    return visit(ctx.forStmt());
+  }
+
+  @Override
+  public PmynType visitForInStatement(ForInStatementContext ctx) {
+    PmynType iterable = visit(ctx.expr());
+    if (!(iterable instanceof Iterable)) {
+      throw new IllegalArgumentException("Expression is not iterable " + ctx.expr().getText());
+    }
+
+    Iterator<PmynType> iter = ((Iterable<PmynType>) iterable).iterator();
+    while (iter.hasNext()) {
+      PmynType element = iter.next();
+      curScope.put(ctx.ID().getText(), element);
+      visitBlockStmt(ctx.blockStmt());
+    }
+
+    return null;
+  }
+
+  @Override
+  public PmynType visitForIndexStatement(ForIndexStatementContext ctx) {
+    visit(ctx.varAssignmentStmt());
+    PmynType exprResult = visit(ctx.expr());
+    if (!(exprResult instanceof BooleanPmynType)) {
+      throw new IllegalArgumentException("Condition is not boolean " + ctx.expr().getText());
+    }
+    BooleanPmynType cond = (BooleanPmynType) exprResult;
+
+    for (;cond.getValue(); visit(ctx.stat())) {
+      visit(ctx.blockStmt());
+      cond = (BooleanPmynType) visit(ctx.expr());
+    }
+
+    return null;
+  }
+
+  @Override
+  public PmynType visitPrintStatement(PrintStatementContext ctx) {
+    PmynType value = visit(ctx.expr());
+    System.out.println(value);
+    return null;
+  }
+
+  //  @Override
 //  public PmynType visitObjectAttribute(ObjectAttributeContext ctx) {
 //    PmynType object = visit(ctx.expr());
 //    if (!(object instanceof ObjectPmynType))
@@ -315,47 +423,7 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 //        .ID().getText(), udFunc);
 //    return udFunc;
 //  }
-//
-//  @Override
-//  public PmynType visitIfElseStatement(IfElseStatementContext ctx) {
-//    return visitIfElseStmt(ctx.ifElseStmt());
-//  }
-//
-//
-//  @Override
-//  public PmynType visitIfElseStmt(IfElseStmtContext ctx) {
-//    for (int i = 0; i < ctx.expr().size(); i++) {
-//      var expr = ctx.expr().get(i);
-//      PmynType exprResult = visit(expr);
-//      if (!(exprResult instanceof BooleanPmynType)) {
-//        throw new IllegalArgumentException("Not a boolean expression " + expr);
-//      }
-//
-//      boolean isTrue = ((BooleanPmynType) exprResult).getValue();
-//      if (isTrue) {
-//        return visit(ctx.blockStmt().get(i));
-//      }
-//    }
-//
-//    if (ctx.elseStmt() != null) {
-//      return visitElseStmt(ctx.elseStmt());
-//    }
-//
-//    return null;
-//  }
-//
-//  @Override
-//  public PmynType visitElseStmt(ElseStmtContext ctx) {
-//    return visit(ctx.blockStmt());
-//  }
-//
-//  @Override
-//  public PmynType visitBlockStmt(BlockStmtContext ctx) {
-//    for (var stmt : ctx.stat()) {
-//      visit(stmt);
-//    }
-//    return null;
-//  }
+
 //
 //  @Override
 //  public PmynType visitReturnStatement(ReturnStatementContext ctx) {

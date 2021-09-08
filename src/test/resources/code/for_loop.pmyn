@@ -1,0 +1,19 @@
+l = [1,2,3,4]
+s = 0
+
+for i in l {
+ s = s + i
+}
+
+i = 0
+while i < 10 {
+ s = s + i
+ i = i + 1
+}
+
+# expect
+debug(s)
+
+for i = 5; i < 20; i = i + 3 {
+  debug(i)
+}

@@ -32,6 +32,54 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitVariableAssignmentStatement(PmynParser.VariableAssignmentStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code IfElseStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfElseStatement(PmynParser.IfElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code IfElseStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfElseStatement(PmynParser.IfElseStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code WhileStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStatement(PmynParser.WhileStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code WhileStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStatement(PmynParser.WhileStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ForStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStatement(PmynParser.ForStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ForStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStatement(PmynParser.ForStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PrintStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStatement(PmynParser.PrintStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PrintStatement}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStatement(PmynParser.PrintStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
@@ -277,4 +325,68 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVarAssignmentStmt(PmynParser.VarAssignmentStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#ifElseStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfElseStmt(PmynParser.IfElseStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#ifElseStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfElseStmt(PmynParser.IfElseStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#elseStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStmt(PmynParser.ElseStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#elseStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStmt(PmynParser.ElseStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#blockStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlockStmt(PmynParser.BlockStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#blockStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlockStmt(PmynParser.BlockStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#whileStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStmt(PmynParser.WhileStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#whileStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStmt(PmynParser.WhileStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code forInStatement}
+	 * labeled alternative in {@link PmynParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterForInStatement(PmynParser.ForInStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code forInStatement}
+	 * labeled alternative in {@link PmynParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitForInStatement(PmynParser.ForInStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code forIndexStatement}
+	 * labeled alternative in {@link PmynParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterForIndexStatement(PmynParser.ForIndexStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code forIndexStatement}
+	 * labeled alternative in {@link PmynParser#forStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitForIndexStatement(PmynParser.ForIndexStatementContext ctx);
 }
