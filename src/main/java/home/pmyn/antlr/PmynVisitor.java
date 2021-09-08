@@ -33,13 +33,6 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExprStatement(PmynParser.ExprStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code PrintStatement}
-	 * labeled alternative in {@link PmynParser#stat}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrintStatement(PmynParser.PrintStatementContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code NewLine}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
@@ -54,12 +47,26 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarRef(PmynParser.VarRefContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ListRef}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListRef(PmynParser.ListRefContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code AddSub}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAddSub(PmynParser.AddSubContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ListGetIndex}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListGetIndex(PmynParser.ListGetIndexContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code UnaryMinus}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -144,6 +151,18 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitEqualityComparison(PmynParser.EqualityComparisonContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#sublist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSublist(PmynParser.SublistContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#sub}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSub(PmynParser.SubContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmynParser#varAssignmentStmt}.
 	 * @param ctx the parse tree

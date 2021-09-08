@@ -13,15 +13,14 @@ stat:
     //|   RETURN expr?          NEW_LINE           #ReturnStatement
     //|   functionDecl          NEW_LINE           #FuncDef
     |   expr                  NEW_LINE           #ExprStatement
-    |   'debug' '(' expr ')'          NEW_LINE           #PrintStatement
     |   NEW_LINE                                 #NewLine
     ;
 
 expr:
         '(' expr ')'                                                 #ExprInsideParens
     //|   ID '(' funcArgs? ')'                                         #FuncCall       // func call like f(), f(x), f(1,2)
-    //|   '[' sublist ']'                                              #ListRef
-    //|   expr '[' expr ']'                                            #ListGetIndex   // array index like a[i], a[i][j]
+    |   '[' sublist ']'                                              #ListRef
+    |   expr '[' expr ']'                                            #ListGetIndex   // array index like a[i], a[i][j]
     |   '-' expr                                                     #UnaryMinus
     |<assoc=right>  expr POW_OPERATOR expr                           #Pow
     |   expr op=(MUL_OPERATOR | DIV_OPERATOR | MOD_OPERATOR) expr    #MulDivMod
@@ -38,9 +37,9 @@ expr:
     |   FALSE                                         #BooleanFalseLiteral
     ;
 
-//sublist : sub (',' sub)* ;
+sublist : sub (',' sub)* ;
 
-//sub :   expr ;
+sub :   expr ;
 
 varAssignmentStmt :  ID ASSIGN expr ;
 

@@ -15,21 +15,21 @@ import home.pmyn.antlr.PmynParser.IntegerLiteralContext;
 import home.pmyn.antlr.PmynParser.MulDivModContext;
 import home.pmyn.antlr.PmynParser.NotExprContext;
 import home.pmyn.antlr.PmynParser.PowContext;
-import home.pmyn.antlr.PmynParser.PrintStatementContext;
 import home.pmyn.antlr.PmynParser.StringLiteralContext;
 import home.pmyn.antlr.PmynParser.VarAssignmentStmtContext;
 import home.pmyn.antlr.PmynParser.VariableAssignmentStatementContext;
+import home.pmyn.antlr.PmynParser.ListGetIndexContext;
+import home.pmyn.antlr.PmynParser.ListRefContext;
 //import home.pmyn.antlr.PmynParser.BlockStmtContext;
 //import home.pmyn.antlr.PmynParser.ElseStmtContext;
-//import home.pmyn.antlr.PmynParser.ListGetIndexContext;
 //import home.pmyn.antlr.PmynParser.IfElseStatementContext;
 //import home.pmyn.antlr.PmynParser.IfElseStmtContext;
 //import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
 //import home.pmyn.antlr.PmynParser.FuncCallContext;
 //import home.pmyn.antlr.PmynParser.FuncDefContext;
-//import home.pmyn.antlr.PmynParser.ListRefContext;
 //import home.pmyn.antlr.PmynParser.ReturnStatementContext;
 
+import home.pmyn.support.datatype.ListPmynType;
 import home.pmyn.support.datatype.NumberPmynType;
 import home.pmyn.support.function.BuiltInFunction;
 import home.pmyn.antlr.PmynParser.AddSubContext;
@@ -44,21 +44,27 @@ import home.pmyn.support.scope.DefaultScope;
 import home.pmyn.support.scope.GlobalScope;
 import home.pmyn.support.scope.PmynScope;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static home.pmyn.helper.MessageFormatHelper.format;
 public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
-  private final PmynScope curScope;
+  //private final PmynScope curScope;
+  private Map<String, PmynType> curScope;
   private List<VisitorListener> listeners;
 
   public DefaultVisitor() {
-    this.curScope = new DefaultScope(GlobalScope.newInstance());
+    //this.curScope = new DefaultScope(GlobalScope.newInstance());
+    this.curScope = new HashMap<>();
     this.listeners = new ArrayList<>();
   }
 
   public DefaultVisitor(PmynScope scope) {
-    this.curScope = scope;
+    //this.curScope = scope;
+    this.curScope = new HashMap<>();
     this.listeners = new ArrayList<>();
   }
 
@@ -79,15 +85,9 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
     String variableName = ctx.ID().getText();
     PmynType assignedValue = visit(ctx.expr());
-    curScope.define(variableName, assignedValue);
+    //curScope.define(variableName, assignedValue);
+    curScope.put(variableName, assignedValue);
     return assignedValue;
-  }
-
-  @Override
-  public PmynType visitPrintStatement(PrintStatementContext ctx) {
-    PmynType value = visit(ctx.expr());
-    System.out.println(value);
-    return null;
   }
 
   @Override
@@ -100,7 +100,8 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
   @Override
   public PmynType visitVarRef(VarRefContext ctx) {
     String key = ctx.ID().getText();
-    PmynType pmynVar = curScope.resolve(key);
+    //PmynType pmynVar = curScope.resolve(key);
+    PmynType pmynVar = curScope.get(key);
     if (pmynVar == null)
       throw new IllegalArgumentException("Not found variable " + ctx.ID().getText());
     return pmynVar;
@@ -238,6 +239,29 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
   public PmynType visitExprInsideParens(ExprInsideParensContext ctx) {
     return visit(ctx.expr());
   }
+
+  @Override
+  public PmynType visitListRef(ListRefContext ctx) {
+    return new ListPmynType(ctx.sublist().sub().stream().map(this::visit).collect(Collectors.toUnmodifiableList()));
+  }
+
+  @Override
+  public PmynType visitListGetIndex(ListGetIndexContext ctx) {
+    PmynType l = visit(ctx.expr(0));
+    if (!(l instanceof ListPmynType)) {
+      throw new IllegalArgumentException(ctx.expr(0).getText() + " is NOT a list");
+    }
+    PmynType indexExpr = visit(ctx.expr(1));
+    if (!(indexExpr instanceof IntegerPmynType)) {
+      throw new IllegalArgumentException("List index must be integer");
+    }
+
+    // TODO: dangerous cast long to int
+    int index = (int)((IntegerPmynType)indexExpr).getNum();
+    ListPmynType list = (ListPmynType)l;
+    return list.getPmynTypes().get(index);
+  }
+
 //
 //  @Override
 //  public PmynType visitObjectAttribute(ObjectAttributeContext ctx) {
@@ -248,28 +272,7 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 //    return ((ObjectPmynType)object).getAttribute(attributeName);
 //  }
 //
-//  @Override
-//  public PmynType visitListRef(ListRefContext ctx) {
-//    return new ListPmynType(ctx.sublist().sub().stream().map(this::visit).collect(Collectors.toUnmodifiableList()));
-//  }
-//
-//  @Override
-//  public PmynType visitListGetIndex(ListGetIndexContext ctx) {
-//    PmynType l = visit(ctx.expr(0));
-//    if (!(l instanceof ListPmynType)) {
-//      throw new IllegalArgumentException(ctx.expr(0).getText() + " is NOT a list");
-//    }
-//    PmynType indexExpr = visit(ctx.expr(1));
-//    if (!(indexExpr instanceof IntegerPmynType)) {
-//      throw new IllegalArgumentException("List index must be integer");
-//    }
-//
-//    // TODO: dangerous cast long to int
-//    int index = (int)((IntegerPmynType)indexExpr).getNum();
-//    ListPmynType list = (ListPmynType)l;
-//    return list.getPmynTypes().get(index);
-//  }
-//
+
 //  @Override
 //  public PmynType visitFuncCall(FuncCallContext ctx) {
 //    PmynType var = curScope.resolve(ctx.ID().getText());
