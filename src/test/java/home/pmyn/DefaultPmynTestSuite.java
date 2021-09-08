@@ -4,7 +4,6 @@ import home.pmyn.antlr.PmynLexer;
 import home.pmyn.antlr.PmynParser;
 import home.pmyn.antlr.parser.DefaultVisitor;
 import java.io.IOException;
-import java.util.Collections;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;

@@ -96,6 +96,9 @@ COLON : ':';
 SEMI_COLON : ';';
 ASSIGN : '=';
 
+TRUE: 'true' ;
+FALSE: 'false' ;
+
 ID  :   LETTER (LETTER | DIGIT | '_')* ;
 
 fragment
@@ -112,9 +115,6 @@ STRING
     :   '"' ( ~[\\"] )*? '"'
     |   '\'' (~[\\'] )*? '\''
     ;
-
-TRUE: 'true' ;
-FALSE: 'false' ;
 
 NEW_LINE: '\r'? '\n' ;
 
