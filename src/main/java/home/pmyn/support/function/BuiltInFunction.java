@@ -1,6 +1,7 @@
 package home.pmyn.support.function;
 
 import home.pmyn.helper.FunctionHelper;
+import home.pmyn.support.datatype.BooleanPmynType;
 import home.pmyn.support.datatype.IntegerPmynType;
 import home.pmyn.support.datatype.ListPmynType;
 import home.pmyn.support.datatype.DecimalPmynType;
@@ -10,8 +11,11 @@ import home.pmyn.support.datatype.PmynType;
 import home.pmyn.support.datatype.NothingPmynType;
 import home.pmyn.support.datatype.PmynType.Type;
 import home.pmyn.support.datatype.StringPmynType;
+import java.awt.desktop.AboutEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -81,19 +85,40 @@ public class BuiltInFunction {
   };
 
   public static final Function Add = params -> {
-    NumberPmynType[] numberParams = Arrays.stream(params)
-        .map(e -> (NumberPmynType)e)
-        .toArray(NumberPmynType[]::new);
+    PmynType first = params[0];
+    PmynType second = params[1];
 
-    double first = numberParams[0].decimalValue();
-    double second = numberParams[1].decimalValue();
-    double result = first + second;
-    Type returnType = FunctionHelper.returnTypeOfNumber(numberParams);
-    switch (returnType) {
-      case decimal: return new DecimalPmynType(result);
-      case integer: return new IntegerPmynType((long)result);
-      default: return NothingPmynType.newInstance();
+    if (first instanceof NumberPmynType && second instanceof NumberPmynType) {
+      double n1 = ((NumberPmynType) first).decimalValue();
+      double n2 = ((NumberPmynType) second).decimalValue();
+      double result = n1 + n2;
+      Type returnType = FunctionHelper.returnTypeOfNumber((NumberPmynType) first, (NumberPmynType) second);
+      switch (returnType) {
+        case decimal: return new DecimalPmynType(result);
+        case integer: return new IntegerPmynType((long)result);
+        default: return NothingPmynType.newInstance();
+      }
     }
+
+    if (first instanceof StringPmynType) {
+      String result = ((StringPmynType) first).getValue() + second.toString();
+      return new StringPmynType(result);
+    }
+
+    if (first instanceof ListPmynType) {
+      ListPmynType lpt = (ListPmynType)first;
+      List<PmynType> l = new ArrayList<>();
+      l.addAll(lpt.getPmynTypes());
+      if (second instanceof ListPmynType) {
+        l.addAll(((ListPmynType) second).getPmynTypes());
+      } else {
+        l.add(second);
+      }
+      return new ListPmynType(l);
+    }
+
+    throw new IllegalArgumentException("Can't add 2 type " + first.getClass().getSimpleName()
+        + " and " + second.getClass().getSimpleName());
   };
 
   public static final Function Sub = params -> {
