@@ -1,6 +1,6 @@
 package home.pmyn.antlr.parser;
 
-//import home.pmyn.antlr.PmynParser.ReturnStatementContext;
+import home.pmyn.antlr.PmynParser.ReturnStatementContext;
 import home.pmyn.support.datatype.PmynType;
 import home.pmyn.support.datatype.NothingPmynType;
 import home.pmyn.support.scope.PmynScope;
@@ -13,11 +13,11 @@ public class FunctionVisitor extends DefaultVisitor {
     super(scope);
   }
 
-//  @Override
-//  public PmynType visitReturnStatement(ReturnStatementContext ctx) {
-//    returnedValue = visit(ctx.expr());
-//    return returnedValue;
-//  }
+  @Override
+  public PmynType visitReturnStatement(ReturnStatementContext ctx) {
+    returnedValue = visit(ctx.expr());
+    return returnedValue;
+  }
 
   public PmynType getReturnedValue() {
     return returnedValue;

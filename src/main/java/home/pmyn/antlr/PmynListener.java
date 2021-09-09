@@ -66,17 +66,29 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitForStatement(PmynParser.ForStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code PrintStatement}
+	 * Enter a parse tree produced by the {@code ReturnStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrintStatement(PmynParser.PrintStatementContext ctx);
+	void enterReturnStatement(PmynParser.ReturnStatementContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code PrintStatement}
+	 * Exit a parse tree produced by the {@code ReturnStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrintStatement(PmynParser.PrintStatementContext ctx);
+	void exitReturnStatement(PmynParser.ReturnStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FuncDef}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncDef(PmynParser.FuncDefContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FuncDef}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncDef(PmynParser.FuncDefContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -162,6 +174,18 @@ public interface PmynListener extends ParseTreeListener {
 	 */
 	void exitUnaryMinus(PmynParser.UnaryMinusContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code FuncCall}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncCall(PmynParser.FuncCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FuncCall}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncCall(PmynParser.FuncCallContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code MulDivMod}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -245,6 +269,18 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNotExpr(PmynParser.NotExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ObjectAttribute}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterObjectAttribute(PmynParser.ObjectAttributeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ObjectAttribute}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code IntegerLiteral}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -387,4 +423,34 @@ public interface PmynListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForIndexStatement(PmynParser.ForIndexStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#functionDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDecl(PmynParser.FunctionDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#functionDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDecl(PmynParser.FunctionDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#funcParams}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncParams(PmynParser.FuncParamsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#funcParams}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncParams(PmynParser.FuncParamsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link PmynParser#funcArgs}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncArgs(PmynParser.FuncArgsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link PmynParser#funcArgs}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncArgs(PmynParser.FuncArgsContext ctx);
 }

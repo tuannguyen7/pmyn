@@ -45,12 +45,19 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitForStatement(PmynParser.ForStatementContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code PrintStatement}
+	 * Visit a parse tree produced by the {@code ReturnStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrintStatement(PmynParser.PrintStatementContext ctx);
+	T visitReturnStatement(PmynParser.ReturnStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FuncDef}
+	 * labeled alternative in {@link PmynParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncDef(PmynParser.FuncDefContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ExprStatement}
 	 * labeled alternative in {@link PmynParser#stat}.
@@ -101,6 +108,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitUnaryMinus(PmynParser.UnaryMinusContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code FuncCall}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncCall(PmynParser.FuncCallContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code MulDivMod}
 	 * labeled alternative in {@link PmynParser#expr}.
 	 * @param ctx the parse tree
@@ -149,6 +163,13 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNotExpr(PmynParser.NotExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ObjectAttribute}
+	 * labeled alternative in {@link PmynParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitObjectAttribute(PmynParser.ObjectAttributeContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code IntegerLiteral}
 	 * labeled alternative in {@link PmynParser#expr}.
@@ -233,4 +254,22 @@ public interface PmynVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitForIndexStatement(PmynParser.ForIndexStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#functionDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDecl(PmynParser.FunctionDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#funcParams}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncParams(PmynParser.FuncParamsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmynParser#funcArgs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncArgs(PmynParser.FuncArgsContext ctx);
 }

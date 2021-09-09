@@ -18,7 +18,6 @@ import home.pmyn.antlr.PmynParser.IntegerLiteralContext;
 import home.pmyn.antlr.PmynParser.MulDivModContext;
 import home.pmyn.antlr.PmynParser.NotExprContext;
 import home.pmyn.antlr.PmynParser.PowContext;
-import home.pmyn.antlr.PmynParser.PrintStatementContext;
 import home.pmyn.antlr.PmynParser.StringLiteralContext;
 import home.pmyn.antlr.PmynParser.SubContext;
 import home.pmyn.antlr.PmynParser.SublistContext;
@@ -30,14 +29,16 @@ import home.pmyn.antlr.PmynParser.BlockStmtContext;
 import home.pmyn.antlr.PmynParser.ElseStmtContext;
 import home.pmyn.antlr.PmynParser.IfElseStatementContext;
 import home.pmyn.antlr.PmynParser.IfElseStmtContext;
-//import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
-//import home.pmyn.antlr.PmynParser.FuncCallContext;
-//import home.pmyn.antlr.PmynParser.FuncDefContext;
-//import home.pmyn.antlr.PmynParser.ReturnStatementContext;
+import home.pmyn.antlr.PmynParser.ObjectAttributeContext;
+import home.pmyn.antlr.PmynParser.FuncCallContext;
+import home.pmyn.antlr.PmynParser.FuncDefContext;
+import home.pmyn.antlr.PmynParser.ReturnStatementContext;
 
 import home.pmyn.antlr.PmynParser.WhileStatementContext;
 import home.pmyn.support.datatype.ListPmynType;
 import home.pmyn.support.datatype.NumberPmynType;
+import home.pmyn.support.datatype.ObjectPmynType;
+import home.pmyn.support.datatype.PmynType.Type;
 import home.pmyn.support.function.BuiltInFunction;
 import home.pmyn.antlr.PmynParser.AddSubContext;
 import home.pmyn.antlr.PmynParser.UnaryMinusContext;
@@ -47,15 +48,19 @@ import home.pmyn.support.datatype.IntegerPmynType;
 import home.pmyn.support.datatype.DecimalPmynType;
 import home.pmyn.support.datatype.PmynType;
 import home.pmyn.support.datatype.StringPmynType;
+import home.pmyn.support.function.Function;
+import home.pmyn.support.function.UserDefinedFunction;
 import home.pmyn.support.scope.DefaultScope;
 import home.pmyn.support.scope.GlobalScope;
 import home.pmyn.support.scope.PmynScope;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import static home.pmyn.helper.MessageFormatHelper.format;
 public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
@@ -379,70 +384,62 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
   }
 
   @Override
-  public PmynType visitPrintStatement(PrintStatementContext ctx) {
-    PmynType value = visit(ctx.expr());
-    System.out.println(value);
-    return null;
+  public PmynType visitObjectAttribute(ObjectAttributeContext ctx) {
+    PmynType object = visit(ctx.expr());
+    if (!(object instanceof ObjectPmynType))
+      throw new IllegalArgumentException(ctx.expr().getText() + " NOT an object");
+    String attributeName = ctx.ID().getText();
+    return ((ObjectPmynType)object).getAttribute(attributeName);
   }
 
-  //  @Override
-//  public PmynType visitObjectAttribute(ObjectAttributeContext ctx) {
-//    PmynType object = visit(ctx.expr());
-//    if (!(object instanceof ObjectPmynType))
-//      throw new IllegalArgumentException(ctx.expr().getText() + " NOT an object");
-//    String attributeName = ctx.ID().getText();
-//    return ((ObjectPmynType)object).getAttribute(attributeName);
-//  }
-//
 
-//  @Override
-//  public PmynType visitFuncCall(FuncCallContext ctx) {
-//    PmynType var = curScope.resolve(ctx.ID().getText());
-//
-//    if (var == null)
-//      throw new IllegalArgumentException("Not found function " + ctx.ID().getText());
-//    if (var.type() != Type.function)
-//      throw new IllegalArgumentException(ctx.ID().getText() + " isn't a function");
-//
-//    Function f = (Function)var;
-//    if (ctx.funcArgs() == null || ctx.funcArgs().isEmpty())
-//      return f.apply();
-//
-//    PmynType[] pmynTypes;
-//    if (ctx.funcArgs() == null) {
-//      pmynTypes = new PmynType[0];
-//    } else {
-//      pmynTypes = ctx.funcArgs().expr()
-//          .stream()
-//          .map(this::visit)
-//          .toArray(PmynType[]::new);
-//    }
-//
-//    return f.apply(pmynTypes);
-//  }
-//
-//  @Override
-//  public PmynType visitFuncDef(FuncDefContext ctx) {
-//    List<String> paramIds;
-//    var funcParams = ctx.functionDecl().funcParams();
-//    if (funcParams == null || funcParams.ID() == null || funcParams.isEmpty())
-//      paramIds = Collections.emptyList();
-//    else
-//      paramIds = ctx.functionDecl().funcParams().ID().stream()
-//          .map(ParseTree::getText)
-//          .collect(Collectors.toUnmodifiableList());
-//    PmynScope scope = new DefaultScope(curScope);
-//    Function udFunc = new UserDefinedFunction(ctx.functionDecl().ID().getText(), paramIds, ctx.functionDecl().blockStmt(), scope);
-//    curScope.define(ctx.functionDecl()
-//        .ID().getText(), udFunc);
-//    return udFunc;
-//  }
+  @Override
+  public PmynType visitFuncCall(FuncCallContext ctx) {
+    PmynType var = curScope.resolve(ctx.ID().getText());
 
-//
-//  @Override
-//  public PmynType visitReturnStatement(ReturnStatementContext ctx) {
-//    throw new IllegalArgumentException("Not allow return here");
-//  }
+    if (var == null)
+      throw new IllegalArgumentException("Not found function " + ctx.ID().getText());
+    if (var.type() != Type.function)
+      throw new IllegalArgumentException(ctx.ID().getText() + " isn't a function");
+
+    Function f = (Function)var;
+    if (ctx.funcArgs() == null || ctx.funcArgs().isEmpty())
+      return f.apply();
+
+    PmynType[] pmynTypes;
+    if (ctx.funcArgs() == null) {
+      pmynTypes = new PmynType[0];
+    } else {
+      pmynTypes = ctx.funcArgs().expr()
+          .stream()
+          .map(this::visit)
+          .toArray(PmynType[]::new);
+    }
+
+    return f.apply(pmynTypes);
+  }
+
+  @Override
+  public PmynType visitFuncDef(FuncDefContext ctx) {
+    List<String> paramIds;
+    var funcParams = ctx.functionDecl().funcParams();
+    if (funcParams == null || funcParams.ID() == null || funcParams.isEmpty())
+      paramIds = Collections.emptyList();
+    else
+      paramIds = ctx.functionDecl().funcParams().ID().stream()
+          .map(ParseTree::getText)
+          .collect(Collectors.toUnmodifiableList());
+    PmynScope scope = new DefaultScope(curScope);
+    Function udFunc = new UserDefinedFunction(ctx.functionDecl().ID().getText(), paramIds, ctx.functionDecl().blockStmt(), scope);
+    curScope.define(ctx.functionDecl()
+        .ID().getText(), udFunc);
+    return udFunc;
+  }
+
+  @Override
+  public PmynType visitReturnStatement(ReturnStatementContext ctx) {
+    throw new IllegalArgumentException("Not allow return here");
+  }
 
   private void exitExpr(PmynType value) {
     for (var l : listeners) {

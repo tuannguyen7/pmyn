@@ -76,13 +76,25 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrintStatement(PmynParser.PrintStatementContext ctx) { }
+	@Override public void enterReturnStatement(PmynParser.ReturnStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrintStatement(PmynParser.PrintStatementContext ctx) { }
+	@Override public void exitReturnStatement(PmynParser.ReturnStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncDef(PmynParser.FuncDefContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncDef(PmynParser.FuncDefContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -172,6 +184,18 @@ public class PmynBaseListener implements PmynListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFuncCall(PmynParser.FuncCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncCall(PmynParser.FuncCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMulDivMod(PmynParser.MulDivModContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -251,6 +275,18 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitNotExpr(PmynParser.NotExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterObjectAttribute(PmynParser.ObjectAttributeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitObjectAttribute(PmynParser.ObjectAttributeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -407,6 +443,42 @@ public class PmynBaseListener implements PmynListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitForIndexStatement(PmynParser.ForIndexStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunctionDecl(PmynParser.FunctionDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctionDecl(PmynParser.FunctionDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncParams(PmynParser.FuncParamsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncParams(PmynParser.FuncParamsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncArgs(PmynParser.FuncArgsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncArgs(PmynParser.FuncArgsContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
