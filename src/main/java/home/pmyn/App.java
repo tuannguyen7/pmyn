@@ -17,7 +17,7 @@ public class App {
 
   public static void main(String[] args) throws IOException {
     App app = new App();
-    String fileName = "src/test/resources/code/arithmetic_expression.pmyn";
+    String fileName = "src/test/resources/code/inner_scope.pmyn";
 
     if (args.length == 0) {
       app.readFile(fileName);

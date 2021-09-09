@@ -1,9 +1,5 @@
 grammar Pmyn;
 
-@header {
-package home.pmyn.antlr;
-}
-
 
 compilationUnit: stat+ ;
 

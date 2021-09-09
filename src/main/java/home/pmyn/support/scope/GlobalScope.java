@@ -48,6 +48,22 @@ public class GlobalScope implements PmynScope {
   }
 
   @Override
+  public PmynScope find(String name) {
+    if (has(name)) return this;
+    return null;
+  }
+
+  @Override
+  public boolean has(String name) {
+    return functions.containsKey(name);
+  }
+
+  @Override
+  public void clear() {
+    throw new IllegalArgumentException("Can't clear Global scope");
+  }
+
+  @Override
   public boolean isRoot() {
     return true;
   }

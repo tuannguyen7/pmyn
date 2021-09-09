@@ -60,19 +60,16 @@ import java.util.stream.Collectors;
 import static home.pmyn.helper.MessageFormatHelper.format;
 public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
-  //private final PmynScope curScope;
-  private Map<String, PmynType> curScope;
+  private PmynScope curScope;
   private List<VisitorListener> listeners;
 
   public DefaultVisitor() {
-    //this.curScope = new DefaultScope(GlobalScope.newInstance());
-    this.curScope = new HashMap<>();
+    this.curScope = new DefaultScope(GlobalScope.newInstance());
     this.listeners = new ArrayList<>();
   }
 
   public DefaultVisitor(PmynScope scope) {
-    //this.curScope = scope;
-    this.curScope = new HashMap<>();
+    this.curScope = scope;
     this.listeners = new ArrayList<>();
   }
 
@@ -93,8 +90,12 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
     String variableName = ctx.ID().getText();
     PmynType assignedValue = visit(ctx.expr());
-    //curScope.define(variableName, assignedValue);
-    curScope.put(variableName, assignedValue);
+    PmynScope scope = curScope.find(variableName);
+    curScope.define(variableName, assignedValue);
+    if (scope == null) {
+    } else {
+      scope.define(variableName, assignedValue);
+    }
     return assignedValue;
   }
 
@@ -107,12 +108,11 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
   @Override
   public PmynType visitVarRef(VarRefContext ctx) {
-    String key = ctx.ID().getText();
-    //PmynType pmynVar = curScope.resolve(key);
-    PmynType pmynVar = curScope.get(key);
-    if (pmynVar == null)
-      throw new IllegalArgumentException("Not found variable " + ctx.ID().getText());
-    return pmynVar;
+    String var = ctx.ID().getText();
+    PmynType value = curScope.resolve(var);
+    if (value == null)
+      throw new IllegalArgumentException("Not found variable " + var);
+    return value;
   }
 
   @Override
@@ -304,19 +304,22 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
   @Override
   public PmynType visitBlockStmt(BlockStmtContext ctx) {
+    curScope = new DefaultScope(curScope);
     for (var stmt : ctx.stat()) {
       visit(stmt);
     }
+    curScope = curScope.parent();
     return null;
   }
 
   @Override
   public PmynType visitWhileStatement(WhileStatementContext ctx) {
     PmynType exprResult = visit(ctx.whileStmt().expr());
-    if (!(exprResult instanceof BooleanPmynType))
+    if (!(exprResult instanceof BooleanPmynType)) {
       throw new IllegalArgumentException("Not a boolean expression " + ctx.whileStmt().expr().getText());
-    BooleanPmynType cond = (BooleanPmynType) exprResult;
+    }
 
+    BooleanPmynType cond = (BooleanPmynType) exprResult;
     while (cond.getValue()) {
       visit(ctx.whileStmt().blockStmt());
       cond = (BooleanPmynType) visit(ctx.whileStmt().expr());
@@ -338,17 +341,20 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
     }
 
     Iterator<PmynType> iter = ((Iterable<PmynType>) iterable).iterator();
+    curScope = new DefaultScope(curScope);
     while (iter.hasNext()) {
       PmynType element = iter.next();
-      curScope.put(ctx.ID().getText(), element);
+      curScope.define(ctx.ID().getText(), element);
       visitBlockStmt(ctx.blockStmt());
     }
 
+    curScope.parent();
     return null;
   }
 
   @Override
   public PmynType visitForIndexStatement(ForIndexStatementContext ctx) {
+    curScope = new DefaultScope(curScope);
     if (ctx.varAssignmentStmt(0) != null) {
       visit(ctx.varAssignmentStmt(0));
     }
@@ -368,6 +374,7 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
       cond = (BooleanPmynType) visit(ctx.expr());
     }
 
+    curScope = curScope.parent();
     return null;
   }
 

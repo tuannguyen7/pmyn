@@ -1,7 +1,5 @@
-// Generated from src/main/java/home/pmyn/antlr/Pmyn.g4 by ANTLR 4.9.2
-
+// Generated from Pmyn.g4 by ANTLR 4.9.2
 package home.pmyn.antlr;
-
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**

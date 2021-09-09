@@ -26,6 +26,12 @@ jar {
     }
 }
 
+generateGrammarSource {
+    maxHeapSize = "512m"
+    arguments += ["-visitor", "-package", "home.pmyn.antlr"]
+    outputDirectory = file("src/main/java/home/pmyn/antlr/")
+}
+
 dependencies {
     implementation group: 'org.antlr', name: 'antlr4-runtime', version: antlrVersion
     implementation group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
