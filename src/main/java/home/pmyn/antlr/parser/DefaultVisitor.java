@@ -349,15 +349,22 @@ public class DefaultVisitor extends PmynBaseVisitor<PmynType> {
 
   @Override
   public PmynType visitForIndexStatement(ForIndexStatementContext ctx) {
-    visit(ctx.varAssignmentStmt());
+    if (ctx.varAssignmentStmt(0) != null) {
+      visit(ctx.varAssignmentStmt(0));
+    }
+
+    BooleanPmynType cond = BooleanPmynType.True;
     PmynType exprResult = visit(ctx.expr());
     if (!(exprResult instanceof BooleanPmynType)) {
       throw new IllegalArgumentException("Condition is not boolean " + ctx.expr().getText());
     }
-    BooleanPmynType cond = (BooleanPmynType) exprResult;
+    cond = (BooleanPmynType) exprResult;
 
-    for (;cond.getValue(); visit(ctx.stat())) {
+    while (cond.getValue()) {
       visit(ctx.blockStmt());
+      if (ctx.varAssignmentStmt(1) != null) {
+        visit(ctx.varAssignmentStmt(1));
+      }
       cond = (BooleanPmynType) visit(ctx.expr());
     }
 

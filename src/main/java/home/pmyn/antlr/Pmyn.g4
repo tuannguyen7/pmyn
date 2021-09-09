@@ -55,8 +55,8 @@ blockStmt : '{' stat* '}' ;
 whileStmt : WHILE expr blockStmt;
 
 forStmt :
-            FOR ID IN expr blockStmt                          #forInStatement
-        |   FOR varAssignmentStmt ';' expr ';' stat blockStmt #forIndexStatement;
+            FOR ID IN expr blockStmt                                          #forInStatement
+        |   FOR varAssignmentStmt? ';' expr ';' varAssignmentStmt? blockStmt #forIndexStatement;
 
 // functionDecl: DEF ID '(' funcParams? ')' blockStmt;
 
