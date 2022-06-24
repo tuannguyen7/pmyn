@@ -28,4 +28,11 @@ public class BooleanPmynType implements PmynType {
   public Type type() {
     return Type.bool;
   }
+
+  public PmynType toggle() {
+    if (value) {
+      return False;
+    }
+    return True;
+  }
 }

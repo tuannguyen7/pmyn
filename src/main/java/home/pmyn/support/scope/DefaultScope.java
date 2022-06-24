@@ -40,6 +40,29 @@ public class DefaultScope implements PmynScope {
   }
 
   @Override
+  public PmynScope find(String name) {
+    if (has(name)) {
+      return this;
+    }
+
+    if (parent == null) {
+      return null;
+    }
+
+    return parent.find(name);
+  }
+
+  @Override
+  public boolean has(String name) {
+    return variables != null && variables.containsKey(name);
+  }
+
+  @Override
+  public void clear() {
+    variables.clear();
+  }
+
+  @Override
   public boolean isRoot() {
     return parent() != null;
   }

@@ -1,0 +1,28 @@
+num = 6
+
+if (num < 10) {
+  print("the number is lower than 10")
+}
+
+if (num > 5) {
+  print("the number is greater than 5")
+} else {
+  print("the number is greater than 5")
+}
+
+def fizzBuzz(num) {
+  if (num % 15 == 0) {
+    return "FizzBuzz"
+  } else if (num % 5 == 0) {
+    return "Fizz"
+  } else if (num % 3 == 0) {
+    return "Buzz"
+  } else {
+    return "Not fizz buzz"
+  }
+}
+
+print(fizzBuzz(3))
+print(fizzBuzz(1))
+print(fizzBuzz(20))
+print(fizzBuzz(30))

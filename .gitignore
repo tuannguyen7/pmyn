@@ -2,9 +2,7 @@ out/
 build/
 .class
 .idea/
+presentation/
 
 # Build tool
-gradle/
 .gradle/
-gradlew
-gradlew.bat

@@ -1,6 +1,6 @@
 package home.pmyn.support.function;
 
-import home.pmyn.antlr.PmynParser.FuncBodyContext;
+import home.pmyn.antlr.PmynParser.BlockStmtContext;
 import home.pmyn.support.datatype.PmynType;
 import home.pmyn.antlr.parser.FunctionVisitor;
 import home.pmyn.support.scope.PmynScope;
@@ -13,11 +13,11 @@ public class UserDefinedFunction implements Function {
 
   private final String funcIdentifier;
   private final List<String> paramIds;
-  private final FuncBodyContext funcBodyContext;
+  private final BlockStmtContext funcBodyContext;
   private final PmynScope scope;
 
   public UserDefinedFunction(String funcIdentifier, List<String> paramIds,
-      FuncBodyContext funcBodyContext, PmynScope scope) {
+      BlockStmtContext funcBodyContext, PmynScope scope) {
     this.funcIdentifier = funcIdentifier;
     this.paramIds = paramIds;
     this.funcBodyContext = funcBodyContext;
@@ -35,6 +35,7 @@ public class UserDefinedFunction implements Function {
     }
 
     FunctionVisitor visitor = new FunctionVisitor(scope);
-    return visitor.visitFuncBody(funcBodyContext);
+    visitor.visit(funcBodyContext);
+    return visitor.getReturnedValue();
   }
 }
